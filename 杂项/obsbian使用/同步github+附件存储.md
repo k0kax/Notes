@@ -5,8 +5,15 @@
 clone到本地
 
 用Obsbian打开该文件夹
-
+![](https://raw.g![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)ithubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)
 创建.gitngore文件，记录不用上传的文件
+````
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+```
+
+
+
 
 Obsbian安装插件Git
 配置插件
