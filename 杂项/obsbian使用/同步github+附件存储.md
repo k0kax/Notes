@@ -5,7 +5,7 @@
 2.clone到本地
 
 3.用Obsbian打开该文件夹作为仓库
-![](https://raw.g![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)ithubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)
 4.创建.gitngore文件，记录不用上传的文件
 ```
 .obsidian/workspace.json
@@ -15,7 +15,8 @@
 Obsbian安装插件Git
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195641861.png)
 配置插件
-
+停止操作一分钟，自动上传
+![[Pasted image 20251124195747.png]]
 注意事项：
 Github有时候会连不上，注意
 
