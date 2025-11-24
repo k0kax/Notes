@@ -12,13 +12,13 @@
 .obsidian/workspace-mobile.json
 ```
 
-Obsbian安装插件Git
+5.Obsbian安装插件Git
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195641861.png)
-配置插件
+6.配置插件
 停止操作一分钟，自动上传
 ![[Pasted image 20251124195747.png]]
 注意事项：
-Github有时候会连不上，注意
+Github有时候会连不上，导致自动上传出现问题，可以用加速器
 
 ## 二、附件存储
 在设置里找到附件默认存放位置，按需求修改即可
