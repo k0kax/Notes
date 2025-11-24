@@ -1,19 +1,16 @@
 
 ## 一、同步Github
-创建Github仓库
+1.创建Github仓库
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195215654.png)
-clone到本地
+2.clone到本地
 
-用Obsbian打开该文件夹
+3.用Obsbian打开该文件夹作为仓库
 ![](https://raw.g![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)ithubusercontent.com/k0kax/PicGo/main/images20251124195349307.png)
-创建.gitngore文件，记录不用上传的文件
-````
+4.创建.gitngore文件，记录不用上传的文件
+```
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 ```
-
-
-
 
 Obsbian安装插件Git
 配置插件
