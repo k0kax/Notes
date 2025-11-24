@@ -1,8 +1,8 @@
 
 ## 一、同步Github
 创建Github仓库
-![[Pasted image 20251124175556.png]]
-pull到本地
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195215654.png)
+clone到本地
 
 用Obsbian打开该文件夹
 
@@ -16,7 +16,7 @@ Github有时候会连不上，注意
 
 ## 二、附件存储
 在设置里找到附件默认存放位置，按需求修改即可
-![[Pasted image 20251124175930.png]]
+
 
 图床设置
 参考
