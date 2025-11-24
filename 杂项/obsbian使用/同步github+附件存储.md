@@ -25,7 +25,10 @@ Github有时候会连不上，导致自动上传出现问题，可以用加速�
 我这里是存在该文件的资格子目录下，普通文件还好，图片的话，最好用图床，markdown引用更加方便
 ### 三、图床设置
 本地图床设置，采用PicGo+Github仓库
-1下载[PicGo](https://github.com/Molunerfinn/PicGo/releases)
+1.下载[PicGo](https://github.com/Molunerfinn/PicGo/releases)
+2.在Github新建一个开放的仓库
+3.配置PicGo
+需要
 参考
    [图片存储](https://www.bilibili.com/video/BV1TCk6BeEJz/?spm_id_from=333.337.search-card.all.click&vd_source=276894b0a5d2380fcbcf1442c30e3620)
    [GitHub同步](https://www.bilibili.com/video/BV1HY5EzCEk5/?spm_id_from=333.337.search-card.all.click&vd_source=276894b0a5d2380fcbcf1442c30e3620)
