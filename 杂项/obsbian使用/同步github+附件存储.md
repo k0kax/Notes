@@ -13,6 +13,7 @@
 ```
 
 Obsbian安装插件Git
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124195641861.png)
 配置插件
 
 注意事项：
