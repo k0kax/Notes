@@ -30,12 +30,11 @@ Github有时候会连不上，导致自动上传出现问题，可以用加速�
 3.配置PicGo
 获取token 去GitHub个人页面setting/Developer_Setting/Person Access Token申请一个token
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251124200426584.png)
-
 ![[Pasted image 20251124200556.png]]
 ![[Pasted image 20251124200727.png]]
-选择qu'xian'qi
-
-
+选择无限期和repo，之后生成即可
+![[Pasted image 20251124200831.png]]
+配置
 参考
    [图片存储](https://www.bilibili.com/video/BV1TCk6BeEJz/?spm_id_from=333.337.search-card.all.click&vd_source=276894b0a5d2380fcbcf1442c30e3620)
    [GitHub同步](https://www.bilibili.com/video/BV1HY5EzCEk5/?spm_id_from=333.337.search-card.all.click&vd_source=276894b0a5d2380fcbcf1442c30e3620)
