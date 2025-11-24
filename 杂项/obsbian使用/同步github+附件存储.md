@@ -22,8 +22,8 @@ Github有时候会连不上，导致自动上传出现问题，可以用加速�
 
 ## 二、附件存储
 在设置里找到附件默认存放位置，按需求修改即可
-
-
+![[Pasted image 20251124195945.png]]
+我这里是存在该文件的资格
 图床设置
 参考
    [图片存储](https://www.bilibili.com/video/BV1TCk6BeEJz/?spm_id_from=333.337.search-card.all.click&vd_source=276894b0a5d2380fcbcf1442c30e3620)
