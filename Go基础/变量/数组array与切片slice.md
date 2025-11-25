@@ -60,7 +60,7 @@ import "fmt"
 func main() {
 
 	
-		var 切片名 []类型
+	var 切片名 []类型      //声明切片
 
     s := make([]string, 3)//短声明string切片
     fmt.Println("emp:", s)
@@ -69,19 +69,19 @@ func main() {
     s[1] = "b"
     s[2] = "c"
     fmt.Println("set:", s)
-    fmt.Println("get:", s[2])
+    fmt.Println("get:", s[2])//取切片的值
 
-    fmt.Println("len:", len(s))
+    fmt.Println("len:", len(s))//切片长度
 
-    s = append(s, "d")
+    s = append(s, "d")//新增切片
     s = append(s, "e", "f")
     fmt.Println("apd:", s)
 
     c := make([]string, len(s))
-    copy(c, s)
+    copy(c, s)//切片复制
     fmt.Println("cpy:", c)
 
-    l := s[2:5]
+    l := s[2:5]//qie'pi
     fmt.Println("sl1:", l)
 
     l = s[:5]
