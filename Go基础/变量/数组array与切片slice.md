@@ -50,7 +50,8 @@ func main() {
 - slice的声明需要内建函数 make
 - len()返回slice长度
 - append(slice,'s')增加元素
-- copy(s,c)将
+- copy(s,c)将s复制给c
+- slice[low:high]取切片low~high的值
 ```go
 package main
 
