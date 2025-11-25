@@ -59,6 +59,9 @@ import "fmt"
 
 func main() {
 
+	```go
+var 切片名 []类型
+
     s := make([]string, 3)
     fmt.Println("emp:", s)
 
