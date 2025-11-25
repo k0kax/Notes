@@ -7,10 +7,11 @@
 
 ## 三、配置VScode
 
-安装插件
+1.安装插件
+在扩展搜索Go
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251125103731475.png)
 
-
-
+2.配置工具
 
 
 
