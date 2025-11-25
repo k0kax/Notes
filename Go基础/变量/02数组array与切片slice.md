@@ -1,5 +1,6 @@
 ## 一、数组
 在 Go 中，**数组** 是一个具有编号且**长度固定**的元素序列。
+代码如下：
 ```go
 package main
 
@@ -51,6 +52,7 @@ func main() {
 - append(slice,'s')增加元素
 - copy(s,c)将s复制给c
 - slice[low:high]取切片low~high的值，low和high都可为0
+代码如下：
 ```go
 package main
 
