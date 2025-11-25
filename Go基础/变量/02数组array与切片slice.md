@@ -47,7 +47,7 @@ func main() {
 ## 二、切片
 
 切片Slice是另一种灵活的数组，是一种基于数组的动态试图。它本身不存储数据，而是通过指针引用底层数组的一部分连续元素。数组是切片的 “底层容器”，切片是数组的 “动态窗口”。
-- slice的声明需要内建函数 make
+- slice的声明需要内建函数 `make([]T, len, cap)`或`s := arr[start:end]`
 - len()返回slice长度，cap()返回slice容量
 - append(slice,'s')增加元素
 - copy(s,c)将s复制给c
@@ -63,7 +63,7 @@ func main() {
 	
 	var 切片名 []类型      //声明切片
 
-    s := make([]string, 4)//短声明string切片，长度为3
+    s := make([]string, 3)//短声明string切片，长度为3
     fmt.Println("emp:", s)
 
     s[0] = "a"
@@ -94,6 +94,7 @@ func main() {
     t := []string{"g", "h", "i"}
     fmt.Println("dcl:", t)
 
+	//多维切片
     twoD := make([][]int, 3)
     for i := 0; i < 3; i++ {
         innerLen := i + 1
@@ -106,3 +107,21 @@ func main() {
 }
 ```
 PS：动态扩容，当`len == cap`时会触发扩容机制，创建一个新的更大的数组（通常是原容量的 2 倍），将原数组的元素复制到新数组，然后切片的指针指向新数组。
+```go
+package main 
+
+import "fmt" 
+
+func main() { 
+	arr := [3]int{1, 2, 3} 
+	s := arr[:] // 切片引用整个数组（len=3, cap=3） 
+	// 此时 len == cap，append 会触发扩容 
+	s = append(s, 4) 
+	fmt.Println("扩容后切片 s:", s) // 输出：[1 2 3 4] 
+	fmt.Println("原数组 arr:", arr) // 输出：[1 2 3]（原数组未变） 
+	
+	// 切片现在引用的是新数组 
+	s[0] = 100 fmt.Println("修改后切片 s:", s) // 输出：[100 2 3 4]
+	fmt.Println("原数组 arr:", arr) // 输出：[1 2 3]（新数组与原数组无关） 
+}
+```
