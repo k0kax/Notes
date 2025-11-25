@@ -7,12 +7,12 @@
 
 ## 三、配置VScode
 
-1.安装插件
+### 1.安装插件
 在扩展搜索Go
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251125103731475.png)
 
-2.配置工具
-
+### 2.配置工具
+在 Visual Studio Code 中，打开 **命令面板**的 **“帮助**>**显示所有命令**”。 或使用键盘快捷方式（Ctrl+Shift+P）
 
 
 参考[Vscode官方操作](https://learn.microsoft.com/zh-cn/azure/developer/go/configure-visual-studio-code)
