@@ -48,7 +48,7 @@ func main() {
 
 切片Slice是另一种灵活的数组。长度可变，可增
 - slice的声明需要内建函数 make
-- len()返回slice长度
+- len()返回slice长度，cap()返回slice容量
 - append(slice,'s')增加元素
 - copy(s,c)将s复制给c
 - slice[low:high]取切片low~high的值，low和high都可为0
