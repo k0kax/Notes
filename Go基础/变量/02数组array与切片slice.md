@@ -63,7 +63,7 @@ func main() {
 	
 	var 切片名 []类型      //声明切片
 
-    s := make([]string, 3)//短声明string切片
+    s := make([]string, 3)//短声明string切片，长度为3
     fmt.Println("emp:", s)
 
     s[0] = "a"
