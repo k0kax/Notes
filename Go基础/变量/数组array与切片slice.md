@@ -12,8 +12,8 @@ func main() {
 	
 	//数组赋值
     a[4] = 100
-    fmt.Println("set:", a)
-    fmt.Println("get:", a[4])
+    fmt.Println("set:", a)//访问数组
+    fmt.Println("get:", a[4])//访问数组元素
 
     fmt.Println("len:", len(a))//数组长度
     
