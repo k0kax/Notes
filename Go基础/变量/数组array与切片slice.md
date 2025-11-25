@@ -59,10 +59,10 @@ import "fmt"
 
 func main() {
 
-	```go
-var 切片名 []类型
+	
+		var 切片名 []类型
 
-    s := make([]string, 3)
+    s := make([]string, 3)//短声明string切片
     fmt.Println("emp:", s)
 
     s[0] = "a"
