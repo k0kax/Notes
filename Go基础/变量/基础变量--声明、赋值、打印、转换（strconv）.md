@@ -7,27 +7,27 @@
 
 
 ### 2.浮点数 float
-| float32 | 32位 | 6-7位小数 | |
-| --- | --- | --- | --- |
-| float64 | 64 | 15-16位小数 | |
+| float32 | 32位 | 6-7位小数   |
+| ------- | --- | -------- |
+| float64 | 64  | 15-16位小数 |
 
 
 ### 3.布尔型 bool
 true或者false
 
 ### 4.字符rune
-`<font style="color:rgba(0, 0, 0, 0.85);">rune</font>`<font style="color:rgba(0, 0, 0, 0.85);"> 是 </font>`<font style="color:rgba(0, 0, 0, 0.85);">int32</font>`<font style="color:rgba(0, 0, 0, 0.85);"> 的别名，专门表示</font>**<font style="color:rgb(0, 0, 0) !important;">Unicode 码点</font>**<font style="color:rgba(0, 0, 0, 0.85);">（单个字符，包括中文、特殊符号等）。</font>
+rune<font style="color:rgba(0, 0, 0, 0.85);"> 是 </font>int32的别名，专门表示Unicode 码点（单个字符，包括中文、特殊符号等）。
 
-`<font style="color:rgba(0, 0, 0, 0.85);">rune</font>`<font style="color:rgba(0, 0, 0, 0.85);"> 的主要目的是解决 </font>**<font style="color:rgb(0, 0, 0) !important;">ASCII 编码和多字节字符（如中文、日文、韩文、 emoji 等）</font>**<font style="color:rgba(0, 0, 0, 0.85);"> 之间的矛盾。</font>
+rune 的主要目的是解决ASCII 编码和多字节字符（如中文、日文、韩文、 emoji 等）之间的矛盾。
 
-<font style="color:rgb(0, 0, 0);">Go 语言的</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgba(0, 0, 0, 0.85) !important;">string</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">类型在底层是一个</font>**<font style="color:rgb(0, 0, 0) !important;">不可变的字节序列</font>**<font style="color:rgb(0, 0, 0);">，并且默认采用</font><font style="color:rgb(0, 0, 0);"> </font>**<font style="color:rgb(0, 0, 0) !important;">UTF-8</font>**<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">编码。UTF-8 是一种变长编码，它为不同的字符分配不同长度的字节：</font>
+Go 语言的string类型在底层是一个不可变的字节序列，并且默认采用UTF-8编码。UTF-8 是一种变长编码，它为不同的字符分配不同长度的字节：
 
 + <font style="color:rgb(0, 0, 0);">英文字母、数字等 ASCII 字符，只占</font><font style="color:rgb(0, 0, 0);"> </font>**<font style="color:rgb(0, 0, 0) !important;">1 个字节</font>**<font style="color:rgb(0, 0, 0);">。</font>
 + <font style="color:rgb(0, 0, 0);">大部分常见的非 ASCII 字符（如中文），占</font><font style="color:rgb(0, 0, 0);"> </font>**<font style="color:rgb(0, 0, 0) !important;">3 个字节</font>**<font style="color:rgb(0, 0, 0);">。</font>
 + <font style="color:rgb(0, 0, 0);">一些特殊字符或 emoji，可能占 </font>**<font style="color:rgb(0, 0, 0) !important;">4 个字节</font>**<font style="color:rgb(0, 0, 0);">。</font>
 
 #### 使用场景
-<font style="color:rgb(0, 0, 0);">正确遍历字符串中的字符</font>
+正确遍历字符串中的字符
 
 ```go
 package main
@@ -59,7 +59,7 @@ func main() {
 索引: 13, 字符: !, rune 值: U+0021
 ```
 
-使用场景：**<font style="color:rgb(0, 0, 0);">将字符串转换为 </font>**`**<font style="color:rgb(0, 0, 0);">rune</font>**`**<font style="color:rgb(0, 0, 0);"> 切片</font>**
+使用场景：将字符串转换为rune切片
 
 ```go
 package main
@@ -185,7 +185,7 @@ fmt.Println(username, password, loginTime) // 输出：admin 123456 0
 ```
 
 ### 2.短变量声明
-使用**<font style="background-color:#FBDE28;">:=</font>**声明，<font style="background-color:#FBDE28;">仅能在函数内部声明</font>，会自动推断类型，<font style="color:rgba(0, 0, 0, 0.85);">支持多变量声明 + 赋值。</font>
+使用 **:=**  声明，仅能在函数内部声明，会自动推断类型，支持多变量声明 + 赋值。
 
 ```go
 package main
@@ -209,28 +209,28 @@ func main() {
 ## 三、打印这些变量
 通常使用fmt.Printf来格式化打印
 
-| **<font style="color:rgb(0, 0, 0) !important;">变量类型</font>** | **<font style="color:rgb(0, 0, 0) !important;">占位符</font>** | **<font style="color:rgb(0, 0, 0) !important;">说明</font>** |
-| :--- | :--- | :--- |
-| `<font style="color:rgb(0, 0, 0);">int</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;"> </font><font style="color:rgba(0, 0, 0, 0.85) !important;">系列</font> | `<font style="color:rgb(0, 0, 0);">%d</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">十进制整数</font> |
-| `<font style="color:rgb(0, 0, 0);">uint</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;"> </font><font style="color:rgba(0, 0, 0, 0.85) !important;">系列</font> | `<font style="color:rgb(0, 0, 0);">%d</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;"> </font><font style="color:rgba(0, 0, 0, 0.85) !important;">或</font><font style="color:rgba(0, 0, 0, 0.85) !important;"> </font>`<font style="color:rgb(0, 0, 0);">%v</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">无符号整数</font> |
-| `<font style="color:rgb(0, 0, 0);">float32/float64</font>` | `<font style="color:rgb(0, 0, 0);">%f</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">浮点数（默认保留 6 位小数）</font> |
-| | `<font style="color:rgb(0, 0, 0);">%.2f</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">保留 2 位小数</font> |
-| | `<font style="color:rgb(0, 0, 0);">%e</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">科学计数法</font> |
-| `<font style="color:rgb(0, 0, 0);">bool</font>` | `<font style="color:rgb(0, 0, 0);">%t</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">布尔值（</font>`<font style="color:rgb(0, 0, 0);">true</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;">/</font>`<font style="color:rgb(0, 0, 0);">false</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;">）</font> |
-| `<font style="color:rgb(0, 0, 0);">string</font>` | `<font style="color:rgb(0, 0, 0);">%s</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">字符串</font> |
-| `<font style="color:rgb(0, 0, 0);">byte</font>` | `<font style="color:rgb(0, 0, 0);">%c</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">字符（ASCII 码对应）</font> |
-| | `<font style="color:rgb(0, 0, 0);">%d</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">字节的十进制值</font> |
-| `<font style="color:rgb(0, 0, 0);">rune</font>` | `<font style="color:rgb(0, 0, 0);">%c</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">Unicode 字符</font> |
-| | `<font style="color:rgb(0, 0, 0);">%U</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">Unicode 码点（</font>`<font style="color:rgb(0, 0, 0);">U+1234</font>`<br/><font style="color:rgba(0, 0, 0, 0.85) !important;">）</font> |
-| <font style="color:rgba(0, 0, 0, 0.85) !important;">任意类型</font> | `<font style="color:rgb(0, 0, 0);">%v</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">变量的默认格式</font> |
-| | `<font style="color:rgb(0, 0, 0);">%T</font>` | <font style="color:rgba(0, 0, 0, 0.85) !important;">变量的类型</font> |
+| **<font style="color:rgb(0, 0, 0) !important;">变量类型</font>**    | **<font style="color:rgb(0, 0, 0) !important;">占位符</font>** | **<font style="color:rgb(0, 0, 0) !important;">说明</font>**                 |
+| :-------------------------------------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------- |
+| int系列                                                           | %d                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">十进制整数</font>           |
+| uint系列                                                          | %d或%v                                                       | <font style="color:rgba(0, 0, 0, 0.85) !important;">无符号整数</font>           |
+| float32/float64                                                 | %f                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">浮点数（默认保留 6 位小数）</font> |
+|                                                                 | %.2f                                                        | <font style="color:rgba(0, 0, 0, 0.85) !important;">保留 2 位小数</font>        |
+|                                                                 | %e                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">科学计数法</font>           |
+| bool                                                            | %t                                                          | 布尔值true或false                                                              |
+| string                                                          | %s                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">字符串</font>             |
+| byte                                                            | %c                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">字符（ASCII 码对应）</font>   |
+|                                                                 | %d                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">字节的十进制值</font>         |
+| rune                                                            | %c                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">Unicode 字符</font>      |
+|                                                                 | %U                                                          | Unicode 码点                                                                 |
+| <font style="color:rgba(0, 0, 0, 0.85) !important;">任意类型</font> | %v                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">变量的默认格式</font>         |
+|                                                                 | %T                                                          | <font style="color:rgba(0, 0, 0, 0.85) !important;">变量的类型</font>           |
 
 
 ## <font style="color:rgb(0, 0, 0) !important;">四、如何相互转换</font>
 ### 1.转换规则
 **<font style="color:rgb(0, 0, 0) !important;">兼容类型之间可以直接转换</font>**<font style="color:rgb(0, 0, 0);">：</font>
 
-+ <font style="color:rgb(0, 0, 0);">整数类型之间（如 </font>`<font style="color:rgb(0, 0, 0);">int</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">int64</font>`<font style="color:rgb(0, 0, 0);">、</font>`<font style="color:rgb(0, 0, 0);">uint</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">uint8</font>`<font style="color:rgb(0, 0, 0);">）</font>
++ 整数类型之间（如 </font>`<font style="color:rgb(0, 0, 0);">int</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">int64</font>`<font style="color:rgb(0, 0, 0);">、</font>`<font style="color:rgb(0, 0, 0);">uint</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">uint8</font>`<font style="color:rgb(0, 0, 0);">）</font>
 + <font style="color:rgb(0, 0, 0);">浮点数类型之间（如 </font>`<font style="color:rgb(0, 0, 0);">float32</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">float64</font>`<font style="color:rgb(0, 0, 0);">）</font>
 + <font style="color:rgb(0, 0, 0);">整数与浮点数之间（如 </font>`<font style="color:rgb(0, 0, 0);">int</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">↔</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">float64</font>`<font style="color:rgb(0, 0, 0);">）</font>
 + `<font style="color:rgb(0, 0, 0);">byte</font>`<font style="color:rgb(0, 0, 0);"> 与 </font>`<font style="color:rgb(0, 0, 0);">int</font>`<font style="color:rgb(0, 0, 0);"> 之间（</font>`<font style="color:rgb(0, 0, 0);">byte</font>`<font style="color:rgb(0, 0, 0);"> 是 </font>`<font style="color:rgb(0, 0, 0);">uint8</font>`<font style="color:rgb(0, 0, 0);"> 的别名）</font>
@@ -277,12 +277,11 @@ func main() {
 
 适用范围：<font style="background-color:#FBDE28;">字符串转其他基础类型</font>
 
-`<font style="color:rgba(0, 0, 0, 0.85) !important;">strconv</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">提供了一系列函数来完成这些转换，它们通常成对出现：</font>
+strconv提供了一系列函数来完成这些转换，它们通常成对出现：
 
-+ `<font style="color:rgb(0, 0, 0);">ParseXxx</font>`<font style="color:rgb(0, 0, 0);">：将字符串转换为</font><font style="color:rgb(0, 0, 0);"> </font>`<font style="color:rgb(0, 0, 0);">Xxx</font>`<font style="color:rgb(0, 0, 0);"> </font><font style="color:rgb(0, 0, 0);">类型。</font>
-+ `<font style="color:rgb(0, 0, 0);">FormatXxx</font>`<font style="color:rgb(0, 0, 0);">：将 </font>`<font style="color:rgb(0, 0, 0);">Xxx</font>`<font style="color:rgb(0, 0, 0);"> 类型转换为字符串。</font>
++ ParseXxx将字符串转换为Xxx类型。FormatXxx将 Xxx 类型转换为字符串。
 
-注意：<font style="color:rgba(0, 0, 0, 0.85);">使用 </font>`<font style="color:rgba(0, 0, 0, 0.85);">strconv</font>`<font style="color:rgba(0, 0, 0, 0.85);"> 的转换函数时，</font>**<font style="color:rgb(0, 0, 0) !important;background-color:#FBDE28;">必须检查返回的错误</font>**
+注意:使用 strconv的转换函数时，**<font style="color:rgb(0, 0, 0) !important;background-color:#FBDE28;">必须检查返回的错误</font>**
 
 ```go
 package main

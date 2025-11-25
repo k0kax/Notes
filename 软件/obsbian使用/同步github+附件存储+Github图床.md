@@ -21,7 +21,7 @@ Github有时候会连不上，导致自动上传出现问题，可以用加速�
 
 ## 二、附件存储
 在设置里找到附件默认存放位置，按需求修改即可
-![[Pasted image 20251124195945.png]]
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251125200929100.png)
 我这里是存在该文件的资格子目录下，普通文件还好，图片的话，最好用图床，markdown引用更加方便
 ### 三、图床设置
 本地图床设置，采用PicGo+Github仓库
