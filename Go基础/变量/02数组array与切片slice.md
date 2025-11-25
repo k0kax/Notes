@@ -108,20 +108,45 @@ func main() {
 ```
 PS：动态扩容，当`len == cap`时会触发扩容机制，创建一个新的更大的数组（通常是原容量的 2 倍），将原数组的元素复制到新数组，然后切片的指针指向新数组。
 ```go
-package main 
+package main
 
-import "fmt" 
+  
 
-func main() { 
-	arr := [3]int{1, 2, 3} 
-	s := arr[:] // 切片引用整个数组（len=3, cap=3） 
-	// 此时 len == cap，append 会触发扩容 
-	s = append(s, 4) 
-	fmt.Println("扩容后切片 s:", s) // 输出：[1 2 3 4] 
-	fmt.Println("原数组 arr:", arr) // 输出：[1 2 3]（原数组未变） 
-	
-	// 切片现在引用的是新数组 
-	s[0] = 100 fmt.Println("修改后切片 s:", s) // 输出：[100 2 3 4]
-	fmt.Println("原数组 arr:", arr) // 输出：[1 2 3]（新数组与原数组无关） 
+import "fmt"
+
+  
+
+func main() {
+
+    arr := [3]int{1, 2, 3}
+
+    s := arr[:]                                     // 切片引用整个数组（len=3, cap=3）
+
+    fmt.Println("s: len=", len(s), ",cap=", cap(s)) //len=3,cap=3
+
+  
+
+    // 此时 len == cap，append 会触发扩容
+
+    s = append(s, 4)
+
+    s = append(s, 5)
+
+    fmt.Println("扩容后切片 s:", s)                      // 输出：[1 2 3 4]
+
+    fmt.Println("s: len=", len(s), ",cap=", cap(s)) //len=5,cap=6
+
+    fmt.Println("原数组 arr:", arr)                    // 输出：[1 2 3]（原数组未变）
+
+  
+
+    // 切片现在引用的是新数组
+
+    s[0] = 100
+
+    fmt.Println("修改后切片 s:", s)   // 输出：[100 2 3 4]
+
+    fmt.Println("原数组 arr:", arr) // 输出：[1 2 3]（新数组与原数组无关）
+
 }
 ```
