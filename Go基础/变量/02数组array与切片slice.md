@@ -1,4 +1,4 @@
-## 数组
+## 一、数组
 在 Go 中，**数组** 是一个具有编号且**长度固定**的元素序列。
 ```go
 package main
@@ -43,9 +43,9 @@ func main() {
     fmt.Println("2d: ", twoD)
 }
 ```
-## 切片
+## 二、切片
 
-切片Slice是另一种灵活的数组。长度可变，可增可减
+切片Slice是另一种灵活的数组。长度可变，可增
 - slice的声明需要内建函数 make
 - len()返回slice长度
 - append(slice,'s')增加元素
