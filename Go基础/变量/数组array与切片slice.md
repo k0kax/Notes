@@ -47,7 +47,10 @@ func main() {
 ## 切片
 
 切片Slice是另一种灵活的数组。长度可变，可增可减
-slice的声明需要内建函数 make
+- slice的声明需要内建函数 make
+- len()返回slice长度
+- append(slice,'s')增加元素
+- copy(s,c)将
 ```go
 package main
 
