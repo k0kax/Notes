@@ -81,13 +81,13 @@ func main() {
     copy(c, s)//切片复制
     fmt.Println("cpy:", c)
 
-    l := s[2:5]//qie'pi
+    l := s[2:5]//切片切取
     fmt.Println("sl1:", l)
 
-    l = s[:5]
+    l = s[:5]//切片窃取s[0]~s[5](不包含5)
     fmt.Println("sl2:", l)
 
-    l = s[2:]
+    l = s[2:]//切片窃取s[2](包含2)
     fmt.Println("sl3:", l)
 
     t := []string{"g", "h", "i"}
