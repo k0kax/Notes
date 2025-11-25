@@ -43,7 +43,6 @@ func main() {
     fmt.Println("2d: ", twoD)
 }
 ```
-
 ## 切片
 
 切片Slice是另一种灵活的数组。长度可变，可增可减
@@ -51,7 +50,7 @@ func main() {
 - len()返回slice长度
 - append(slice,'s')增加元素
 - copy(s,c)将s复制给c
-- slice[low:high]取切片low~high的值
+- slice[low:high]取切片low~high的值，low和high都可为0
 ```go
 package main
 
