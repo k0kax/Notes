@@ -265,3 +265,89 @@ func main() {
     x.say()
 }
 ```
+## 三、空接口
+### 1.定义
+空接口是指没有定义任何方法的接口。因此任何类型都实现了空接口。
+空接口类型的变量可以存储任意类型的变量。
+``` go
+func main() {
+    // 定义一个空接口x
+    var x interface{}
+    s := "pprof.cn"
+    x = s
+    fmt.Printf("type:%T value:%v\n", x, x)
+    i := 100
+    x = i
+    fmt.Printf("type:%T value:%v\n", x, x)
+    b := true
+    x = b
+    fmt.Printf("type:%T value:%v\n", x, x)
+}
+```
+### 2.应用
+#### 作为函数的参数
+使用空接口实现可以接收任意类型的函数参数。
+``` go
+// 空接口作为函数参数
+func show(a interface{}) {
+    fmt.Printf("type:%T value:%v\n", a, a)
+}
+```
+#### 作为map的值
+使用空接口实现可以保存任意值的字典。
+``` go
+// 空接口作为map值
+    var studentInfo = make(map[string]interface{})
+    studentInfo["name"] = "李白"
+    studentInfo["age"] = 18
+    studentInfo["married"] = false
+    fmt.Println(studentInfo)
+```
+
+### 3.类型断言
+一个接口的值（简称接口值）是由一个具体类型和具体类型的值两部分组成的。这两部分分别称为接口的动态类型和动态值。如下：
+``` go
+var w io.Writer
+w = os.Stdout
+w = new(bytes.Buffer)
+w = nil
+```
+分解如下：
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130162842434.png)
+
+想要判断空接口中的值这个时候就可以使用类型断言，其语法格式为：`x.(T)`，其中：
+```go
+ x：表示类型为interface{}的变量
+ T：表示断言x可能是的类型。
+```
+该语法返回两个参数，第一个参数是x转化为T类型后的变量，第二个值是一个布尔值，若为true则表示断言成功，为false则表示断言失败。
+```go
+func main() {
+    var x interface{}
+    x = "pprof.cn"
+    v, ok := x.(string)
+    if ok {
+        fmt.Println(v)
+    } else {
+        fmt.Println("类型断言失败")
+    }
+}
+```
+上面的示例中如果要断言多次就需要写多个if判断，这个时候我们可以使用switch语句来实现：
+``` go
+func justifyType(x interface{}) {
+    switch v := x.(type) {
+    case string:
+        fmt.Printf("x is a string，value is %v\n", v)
+    case int:
+        fmt.Printf("x is a int is %v\n", v)
+    case bool:
+        fmt.Printf("x is a bool is %v\n", v)
+    default:
+        fmt.Println("unsupport type！")
+    }
+}
+```
+因为空接口可以存储任意类型值的特点，所以空接口在Go语言中的使用十分广泛。
+
+关于接口需要注意的是，只有当有两个或两个以上的具体类型必须以相同的方式进行处理时才需要定义接口。不要为了接口而写接口，那样只会增加不必要的抽象，导致不必要的运行时损耗。
