@@ -1,3 +1,5 @@
+> 该篇涉及大量接口相关，注意查看相关文章
+
 语法分析器parser是将前文生成的词法单元进一步转化为抽象语法树AST
 ### 一、抽象语法树AST
 
@@ -15,25 +17,25 @@ let result = add(five,ten);
 
 
 #### 1.1三个接口
-一个节点接口Node，返回字面量
+一个接口Node节点，返回字面量
 ```go
 type Node interface {
 	TokenLiteral() string
 }
 ```
-对应TokenLiteral()方法，用于返回字面值
+对应LetStatement的TokenLiteral()方法，用于返回字面值
 ```go
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
 ```
 语句接口Statement,包括节点和语句节点
 ```go
 type Statement interface {
-	Node
+	Node   //嵌套了Node
 	statementNode() //语句节点
 }
 func (ls *LetStatement) statementNode()       {}  
 ```
-上文涉及到一个标识符的结构体,包括对应的词法单元类型和值
+上文涉及到一个==标识符Ident==的结构体,包括对应的词法单元类型和值
 ```go
 type Identifier struct {
 	Token token.Token //token.IDENT词法单元
