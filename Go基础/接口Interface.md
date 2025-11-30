@@ -166,3 +166,102 @@ func main() {
 }
 ```
 ### 2.多个类型实现同一接口
+不同类型可以实现同一接口，狗和车都可以动如下
+``` go
+// Mover 接口
+type Mover interface {
+    move()
+}
+
+type dog struct {
+    name string
+}
+
+type car struct {
+    brand string
+}
+
+// dog类型实现Mover接口
+func (d dog) move() {
+    fmt.Printf("%s会跑\n", d.name)
+}
+
+// car类型实现Mover接口
+func (c car) move() {
+    fmt.Printf("%s速度70迈\n", c.brand)
+}
+
+func main() {
+    var x Mover
+    var a = dog{name: "旺财"}
+    var b = car{brand: "保时捷"}
+    x = a
+    x.move()
+    x = b
+    x.move()
+}
+```
+并且一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现。
+``` go
+// WashingMachine 洗衣机
+type WashingMachine interface {
+    wash()
+    dry()
+}
+
+// 甩干器
+type dryer struct{}
+
+// 实现WashingMachine接口的dry()方法
+func (d dryer) dry() {
+    fmt.Println("甩一甩")
+}
+
+// 海尔洗衣机
+type haier struct {
+    dryer //嵌入甩干器
+}
+
+// 实现WashingMachine接口的wash()方法
+func (h haier) wash() {
+    fmt.Println("洗刷刷")
+}
+```
+### 3.接口嵌套
+接口与接口间可以通过嵌套创造出新的接口。嵌套得到的接口的使用与普通接口一样
+```go
+// Sayer 接口
+type Sayer interface {
+    say()
+}
+
+// Mover 接口
+type Mover interface {
+    move()
+}
+
+// 接口嵌套
+type animal interface {
+    Sayer
+    Mover
+}
+
+type cat struct {
+    name string
+}
+
+func (c cat) say() {
+    fmt.Println("喵喵喵")
+}
+
+func (c cat) move() {
+    fmt.Println("猫会动")
+}
+
+func main() {
+    var x animal
+    x = cat{name: "花花"}
+    x.move()
+    x.say()
+}
+```
