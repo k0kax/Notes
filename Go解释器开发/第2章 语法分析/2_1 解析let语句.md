@@ -69,7 +69,7 @@ func (p *Program) TokenLiteral() string {
 }
 ```
 #### 1.4 let语句专有的结构体
-此处的AST生成语法树采取如下结构
+此处的AST抽象语法树采取如下结构
 
 
 
