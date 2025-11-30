@@ -74,7 +74,7 @@ func (p *Program) TokenLiteral() string {
 
 
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
-包括词法单元Token、标识符名称、表达式（可能是值，也可能是方法）
+包括词法单元Token、标识符名称、表达式（可能是值，也可能是方法公式之类的）
 ```go
 type LetStatement struct {
 	Token token.Token // token.LET词法单元
