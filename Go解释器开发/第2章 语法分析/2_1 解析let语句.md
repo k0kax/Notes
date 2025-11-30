@@ -200,7 +200,7 @@ func (p *Parser) nextToken() {
 func (p *Parser) ParseProgram() *ast.Program {
 
 	program := &ast.Program{}              //
-	program.Statements = []ast.Statement{} //
+	program.Statements = []ast.Statement{} //接口切片集
 
 	for p.curToken.Type != token.EOF {
 		stmt := p.parseStatement()
