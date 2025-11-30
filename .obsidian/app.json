@@ -1,6 +1,6 @@
 {
-  "attachmentFolderPath": "/",
+  "attachmentFolderPath": "./attachement",
   "readableLineLength": false,
-  "useMarkdownLinks": true,
+  "useMarkdownLinks": false,
   "newLinkFormat": "relative"
 }
