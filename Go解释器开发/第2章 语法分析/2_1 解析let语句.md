@@ -68,7 +68,7 @@ func (p *Program) TokenLiteral() string {
 ```
 #### 1.4 let语句专有的结构体
 此处的AST采取如下结构
-![](https://cdn.jsdelivr.net/gh/k0kax/PicGo@main/image/202311142020165.png)
+![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
 包括词法单元、标识符名称、值
 ```go
 type LetStatement struct {
