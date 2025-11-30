@@ -68,6 +68,9 @@ func (p *Program) TokenLiteral() string {
 ```
 #### 1.4 let语句专有的结构体
 此处的AST采取如下结构
+
+
+
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
 包括词法单元、标识符名称、值
 ```go
