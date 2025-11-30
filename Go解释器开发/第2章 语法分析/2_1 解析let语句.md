@@ -17,17 +17,17 @@ let result = add(five,ten);
 
 
 #### 1.1三个接口
-一个接口Node节点，返回字面量
+一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
 ```go
 type Node interface {
 	TokenLiteral() string
 }
 ```
-对应LetStatement的TokenLiteral()方法，用于返回字面值
+对应LetStatement的TokenLiteral()方法，用于返回==字面值Literal==
 ```go
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
 ```
-语句接口Statement,包括节点和语句节点
+语句接口Statement,包括节点Node和语句节点方法statementNode()
 ```go
 type Statement interface {
 	Node   //嵌套了Node
@@ -42,7 +42,7 @@ type Identifier struct {
 	Value string      //字面量值
 }
 ```
-表达式接口
+表达式expression接口，嵌套了Node接口的所有方法和expressionNode()方法
 ```go
 type Expression interface {
 	Node
@@ -52,17 +52,17 @@ type Expression interface {
 func (i *Identifier) expressionNode() {}
 ```
 #### 1.2结构体
-程序结构体，也就是根节点
+程序结构体Program，也就是根节点，包含Statement语句接口的切片Statements
 ```go
 type Program struct {
 	Statements []Statement //接口类型的切片
 }
 ```
-###### 1.3词法单元的字面量
+###### 1.3词法单元的Token字面量Literal
 ```go
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
-		return p.Statements[0].TokenLiteral()
+		return p.Statements[0].TokenLiteral()//返回接口第一个token的字面量
 	} else {
 		return ""
 	}
@@ -74,12 +74,12 @@ func (p *Program) TokenLiteral() string {
 
 
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
-包括词法单元、标识符名称、值
+包括词法单元Token、标识符名称、值
 ```go
 type LetStatement struct {
 	Token token.Token // token.LET词法单元
-	Name  *Identifier //保存绑定的标识符名称
-	Value Expression  //产生值的表达式
+	Name  *Identifier //保存绑定的标识符Ident名称
+	Value Expression  //产生值的表达式expression
 }
 ```
 总代码ast/ast.go
