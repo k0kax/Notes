@@ -1,3 +1,127 @@
 go语言的接口是一种抽象类型，是系列方法的集合。接口做的事就是定义一个协议（规则），只要一台机器具有洗衣和甩干的功能，就称之为洗衣机。不关心属性（数据），只关心行为（方法）。
 
-只声明方法，不实现方法
+**核心：只声明方法，不实现方法**
+## 一、为啥用接口？
+如下代码：
+``` go
+type Cat struct{}
+
+func (c Cat) Say() string { return "喵喵喵" }
+
+type Dog struct{}
+
+func (d Dog) Say() string { return "汪汪汪" }
+
+func main() {
+    c := Cat{}
+    fmt.Println("猫:", c.Say())
+    d := Dog{}
+    fmt.Println("狗:", d.Say())
+}
+```
+上面的代码，猫狗都会叫，在main里面就重复了，如果还有其他动物，就更加冗杂。相同的叫的行为可以统一为一个会叫的动物来处理，这就是接口。
+## 二、接口的定义
+接口是一个或多个方法签名的集合。任何类型的方法集中只要拥有该接口对应的全部方法签名。就表示它 "实现" 了该接口，无须在该类型上显式声明实现了哪个接口。
+所谓对应方法，是指有相同名称、参数列表 (不包括参数名) 以及返回值。  当然，该类型还可以有其他方法。
+- 接口只有方法声明，没有实现，没有数据字段。
+- 接口可以匿名嵌入其他接口，或嵌入到结构中。
+- 对象赋值给接口时，会发生拷贝，而接口内部存储的是指向这个复制品的指针，既无法修改复制品的状态，也无法获取指针。
+- 只有当接口存储的类型和对象都为nil时，接口才等于nil。
+- 接口调用不会做receiver的自动转换。
+- 接口同样支持匿名字段方法。
+- 接口也可实现类似OOP中的多态。
+- 空接口可以作为任何类型数据的容器。
+- 一个类型可实现多个接口。
+- 接口命名习惯以 er 结尾。
+接口的定义格式如下：
+``` go
+type 接口类型名 interface{
+        方法名1( 参数列表1 ) 返回值列表1
+        方法名2( 参数列表2 ) 返回值列表2
+        …
+    }
+    
+//1.接口名：使用type将接口定义为自定义的类型名。Go语言的接口在命名时，一般会在单词后面添加er，如有写操作的接口叫Writer，有字符串功能的接口叫Stringer等。接口名最好要能突出该接口的类型含义。
+//2.方法名：当方法名首字母是大写且这个接口类型名首字母也是大写时，这个方法可以被接口所在的包（package）之外的代码访问。
+//3.参数列表、返回值列表：参数列表和返回值列表中的参数变量名可以省略。
+//例如：
+
+type writer interface{
+    Write([]byte) error
+}
+```
+## 三、实现接口的条件
+一个对象只要全部实现了接口中的方法，那它就实现了接口。接口就是一个需要被实现得到方法列表
+``` go
+// Sayer 接口
+type Sayer interface {
+    say()
+}
+
+type dog struct {}
+type cat struct {}
+
+// dog实现了Sayer接口
+func (d dog) say() {
+    fmt.Println("汪汪汪")
+}
+
+// cat实现了Sayer接口
+func (c cat) say() {
+    fmt.Println("喵喵喵")
+}
+```
+## 四、接口类型变量
+实现接口咋用？
+``` go
+func main() {
+    var x Sayer // 声明一个Sayer类型的变量x
+    a := cat{}  // 实例化一个cat
+    b := dog{}  // 实例化一个dog
+    x = a       // 可以把cat实例直接赋值给x
+    x.say()     // 喵喵喵
+    x = b       // 可以把dog实例直接赋值给x
+    x.say()     // 汪汪汪
+}
+```
+如上，Sayer类型的变量x能够存储dog和cat类型的变量a和b。
+## 五、值接收者和指针接受者实现接口的区别
+有一个Mover接口和一个dog结构体
+``` go
+type Mover interface {
+    move()
+}
+
+type dog struct {}
+```
+### 值接收者实现窗口
+``` go
+func (d dog) move() {
+    fmt.Println("狗会动")
+}
+
+func main() {
+    var x Mover
+    var wangcai = dog{} // 旺财是dog类型
+    x = wangcai         // x可以接收dog类型
+    var fugui = &dog{}  // 富贵是*dog类型
+    x = fugui           // x可以接收*dog类型
+    x.move()
+}
+```
+不管是dog结构体还是结构体指针`*dog`类型的变量都可以赋值给该接口变量。因为Go语言中有对指针类型变量求值的语法糖，dog指针fugui内部会自动求值`*fugui`。
+### 指针接受者实现接口
+```go
+func (d *dog) move() {
+    fmt.Println("狗会动")
+}
+func main() {
+    var x Mover
+    var wangcai = dog{} // 旺财是dog类型
+    x = wangcai         // x不可以接收dog类型
+    var fugui = &dog{}  // 富贵是*dog类型
+    x = fugui           // x可以接收*dog类型
+}
+```
+此时实现Mover接口的是`*dog`类型，所以不能给x传入dog类型的wangcai，此时x只能存储`*dog`类型的值。
+总的来说，值接收者可以用值和指针，指针接收者只能用指针
