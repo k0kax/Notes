@@ -661,4 +661,7 @@ FAIL    monkey_Interpreter/parser       0.128s
 刚运行到 curtoken=x 下一个token应为=，却是10，故而expected next token to be “=”,got=INT instead
 运行let foobar = ;时
 刚运行到 curtoken=let 下一个token应为一个变量名也就是ident，却是1，故而expected next token to be “IDENT”,got=INT instead"
+
+let foobar = ;这句时把foobar解析成空了
+
 ```
