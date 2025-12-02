@@ -300,7 +300,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
     //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
 }
 ```
-##### 辅助断言函数
+##### 辅助：断言函数
 ```go
 // 当前token判断
 func (p *Parser) curTokenIs(t token.TokenType) bool {
@@ -322,7 +322,18 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 	}
 }
 ```
+##### 辅助：错误检测处理函数
+```go
+// 错误检测
+func (p *Parser) Errors() []string {
+    return p.errors
+}
 
+func (p *Parser) peekErrors(t token.TokenType) {
+    msg := fmt.Sprintf("expected next token to be “%s”,got=%s instead", t, p.peekToken.Type)
+    p.errors = append(p.errors, msg)
+}
+```
 #### 2.4总代码parse/parse.go
 ```go
 package parser
