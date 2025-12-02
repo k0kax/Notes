@@ -348,6 +348,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
     stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 	//运行后：stmt.token=let curtoken=x peektoken = "=" stmt.Name=&{Token: IDENT("x"), Value: "x"}
   
+	
 
     //3.检测等号=
     //检查下一个token（peektoken）,,是则继续，不是则退出，peektoken、curtoken后移一位
@@ -356,14 +357,19 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
     }
 	//运行后：stmt.token=let curtoken="=" peektoken = "5"  stmt.Name=&{Token: IDENT("x"), Value: "x"}
   
-
-    //4.检测分号（;）     处理语句末尾的分号（;）
+	//4.TODO: 跳过对表达式的处理parseExpression()
+	//运行后：stmt.token=let curtoken="5" peektoken = ";"  stmt.Name=&{Token: IDENT("x"), Value: "x"} tmt.Value = &IntegerLiteral {Token: INT ("5"), Value: 5}
+	
+    //5.检测分号（;）     处理语句末尾的分号（;）
     //检测当前token（curtoken）是否是分号（;） 
     if !p.curTokenIs(token.SEMICOLON) {//是，则不需要移动
         p.nextToken() //不是，则peektoken、curtoken后移一位，直接解析下一句
     }
 	//运行后：stmt.token=let curtoken=";" peektoken = ""  stmt.Name=&{Token: IDENT("x"), Value: "x"} stmt.
-    return stmt //直接返回stmt
+    
+    //6.直接返回stmt
+    return stmt 
+    //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
 
 }
 ```
