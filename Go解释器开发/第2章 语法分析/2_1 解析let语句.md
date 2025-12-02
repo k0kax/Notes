@@ -629,4 +629,11 @@ func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 
 ```
 测试结果
-![](https://cdn.jsdelivr.net/gh/k0kax/PicGo@main/image/202311142217388.png)
+正常测试：
+```go
+PS E:\Codes\Go\monkey_Interpreter\parser> go test 
+PASS
+ok      monkey_Interpreter/parser       0.119s
+PS E:\Codes\Go\monkey_Interpreter\parser> 
+```
+如果进行了修改：
