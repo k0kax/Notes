@@ -644,7 +644,8 @@ input := `let x = 5;
 let foobar = ;//缺值
 let s=1
 let s
-let 1`
+let 1
+let ss`//非预期，则返回nil
 ```
 结果：
 ```go
