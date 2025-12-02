@@ -26,35 +26,18 @@ five、ten、add都是标识符indent，5、10和函数字面量fn(x,y)都是表
 // ast/ast.go
 package ast
 type Node interface {//节点接口
-	TokenLiteral() string
+	TokenLiteral() string//token字面方法，返回关联的字面量，用于调试
 }
 type Statement interface {//语句接口
 	Node
-	statementNode()
+	statementNode()//占位方法，并不必须
 }
 type Expression interface {//表达式接口
 	Node
-	expressionNode()
+	expressionNode()//占位方法，并不必须
 }
 ```
 它包含了三个接口，Node节点(ast每个节点都要实现，不然连不到一起)，statement语句接口，expression表达式接口
-
-一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
-对应LetStatement的TokenLiteral()方法，用于返回==字面值Literal==
-```go
-func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
-```
-上文涉及到一个==标识符Ident==的结构体,包括对应的词法单元类型和值
-```go
-type Identifier struct {
-	Token token.Token //token.IDENT词法单元
-	Value string      //字面量值
-}
-```
-表达式expression接口，嵌套了Node接口的所有方法和expressionNode()方法
-```go
-func (i *Identifier) expressionNode() {}
-```
 #### 1.2 程序结构体
 程序结构体Program，也就是根节点，包含Statement语句接口的切片Statements
 ```go
