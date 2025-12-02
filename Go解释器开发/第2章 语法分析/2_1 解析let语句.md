@@ -481,33 +481,19 @@ func (p *Parser) parseStatement() ast.Statement {
 func (p *Parser) parseLetStatement() *ast.LetStatement {
 
     //1.初始化 LetStatement 节点：把当前 curToken（就是 LET 类型的 "let"）绑定到节点
-
     stmt := &ast.LetStatement{Token: p.curToken}
-
     //运行后：stmt.token=let curtoken=let peektoken=x
 
-  
-
     //2.检测标识符
-
     //检测下一个token(也就是peektoken)不是标识符indent，不是则退出（此处检测到为x是标识符，不退）,是则peektoken、curtoken后移一位
-
     if !p.expectPeek(token.IDENT) { //执行expectPeek(),检测到peektoken.type=IDENT,不执行{}内容，peektoken、curtoken都后移一位
-
         return nil
-
     }
-
     //运行后：stmt.token=let curtoken=x peektoken = "="
 
-  
-
     //3.
-
     //将当前词法单元作为标识符的 Token 字段，并将其字面值literal作为标识符indent的值value赋给 stmt.Name
-
     stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
-
     //运行后：stmt.token=let curtoken=x peektoken = "=" stmt.Name=&{Token: IDENT("x"), Value: "x"}
 
     //4.检测等号=
