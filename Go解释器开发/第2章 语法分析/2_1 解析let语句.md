@@ -300,7 +300,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
     //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
 }
 ```
-##### 判断函数
+##### 辅助断言函数
 ```go
 // 当前token判断
 func (p *Parser) curTokenIs(t token.TokenType) bool {
