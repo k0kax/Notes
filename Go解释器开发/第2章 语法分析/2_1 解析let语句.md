@@ -58,7 +58,7 @@ func (p *Program) TokenLiteral() string {
 此处的AST抽象语法树采取如下结构
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
 包括词法单元Token、标识符名称Name、表达式express（可能是值，也可能是方法公式之类的）
-首先第一个字段是变量名Name，它对应字面量结构体Ident，还需要一个指向等号右侧的表达式Value，对应expression。
+首先第一个字段是变量名Name，它对应标识符结构体Ident，还需要一个指向等号右侧的表达式Value，对应表达式expression。
 这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
 ```go 
 //ast.go
