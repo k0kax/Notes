@@ -571,7 +571,7 @@ func TestLetStatements(t *testing.T) {
 	p := New(l)           //语法解析器
 
 	program := p.ParseProgram() //解析程序，并将返回的抽象语法树（AST）存储在变量program中
-
+	checkParserErrors(t,p)
 	//非空检查
 	if program == nil {
 		t.Fatalf("ParseProgram() returned nil")
