@@ -261,7 +261,7 @@ func (p *Parser) parseStatement() ast.Statement {
 }
 ```
 ##### 解析let语句parseLetStatement()
-总的来说，总流程为：检测到LET->检测到标识符IDENT->ASSIGN->进行处理
+总的来说，总流程为：检测到LET->检测到标识符IDENT->检测到等号ASSIGN(=)->进行处理(写入)->检测到分号SEMICOLON（;）
 具体如下：
 ```go
 // 解析let语句 以为例let x=5;
