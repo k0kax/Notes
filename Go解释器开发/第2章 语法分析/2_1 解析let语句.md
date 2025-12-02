@@ -60,7 +60,7 @@ func (p *Program) TokenLiteral() string {
 包括词法单元Token、标识符名称Name、表达式express（可能是值，也可能是方法公式之类的）
 首先第一个字段是变量名Name，它对应标识符结构体Ident，还需要一个指向等号右侧的Value（产生值的表达式），对应表达式expression。
 ``` 
-yua
+原作者的话：
 为了持有绑定的标识符，let x = 5;中的x是Identifier结构类型，该类型实现了Expression接口。但是let语句中的标识符不会产生值，那么为什么要作为表达式来使用呢？答案是为了保持简单。Monkey程序其他地方的标识符会产生值，例如let x =valueProducingIdentifier;。为了减少AST中各种类型节点的数量，在变量绑定中使用Identifier表示名称，之后在表示表达式中的标识符的时候，可以复用Identifier节点。
 ```
 因此LetStatement需要设计为：
