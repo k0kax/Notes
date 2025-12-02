@@ -215,7 +215,7 @@ func (p *Parser) ParseProgram() *ast.Program {
 	program := &ast.Program{}              
 	program.Statements = []ast.Statement{} //接口切片集
 
-	for p.curToken.Type != token.EOF {
+	for p.curToken.Type != token.EOF {//循环解析
 		stmt := p.parseStatement()
 		if stmt != nil {
 			program.Statements = append(program.Statements, stmt)
@@ -261,6 +261,7 @@ func (p *Parser) parseStatement() ast.Statement {
 }
 ```
 ##### 解析let语句parseLetStatement()
+总的来说，总流程为：检测到LET->检测到标识符IDENT->ASSIGN->进行处理
 具体如下：
 ```go
 // 解析let语句 以为例let x=5;
