@@ -641,7 +641,7 @@ PS \parser>
 let x = 5;
 let y  10;
 let foobar = ;
-let 1;
+let 1
 ```
 结果：
 ```go
@@ -658,5 +658,7 @@ FAIL    monkey_Interpreter/parser       0.128s
 通过错误提示可知：
 ```go
 运行 let y  10;时
-刚运行到 curtoken=x 下一个token应为=，却是10 ，孤
+刚运行到 curtoken=x 下一个token应为=，却是10，故而expected next token to be “=”,got=INT instead
+
+
 ```
