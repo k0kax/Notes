@@ -652,12 +652,14 @@ let ss`//非预期，则返回nil
 Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestLetStatements$ monkey_Interpreter/parser
 
 === RUN   TestLetStatements
-    parser\parser_test.go:55: parse has 2 errors
-   \parser\parser_test.go:57: parse error:"expected next token to be “=”,got=INT instead"
-    \parser\parser_test.go:57: parse error:"expected next token to be “IDENT”,got=INT instead"
+    parser\parser_test.go:59: parse has 4 errors
+    parser\parser_test.go:61: parse error:"expected next token to be “=”,got=INT instead"   对应let y  10;
+    parser\parser_test.go:61: parse error:"expected next token to be “=”,got=LET instead"   对应
+    parser\parser_test.go:61: parse error:"expected next token to be “IDENT”,got=INT instead" 对应let 1
+    parser\parser_test.go:61: parse error:"expected next token to be “=”,got=EOF instead" 对应let ss
 --- FAIL: TestLetStatements (0.00s)
 FAIL
-FAIL    monkey_Interpreter/parser       0.128s
+FAIL    monkey_Interpreter/parser       0.129s
 ```
 通过错误提示可知：
 ```go
