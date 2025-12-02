@@ -5,6 +5,10 @@
 
 本次进实现let的语法分析
 ```shell
+let语句的形式如下：
+let <标识符indent>=<表达式expression>
+
+示例如下：
 let five = 5;  
 let ten =10;  
 let add = fn(x,y){  
@@ -162,7 +166,7 @@ func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 ### 二、语法分析器
 ##### 2.1语法分析器的结构
 包括词法单元指针lexer，当前词法单元curToken，下一个词法单元peekToken，此处和[[1_1词法分析器]]的position/readPosition 类似
-```go
+```go parser.go
 // 语法分析器结构
 type Parser struct {
 	l *lexer.Lexer //指向词法分析器实例的指针
@@ -174,7 +178,7 @@ type Parser struct {
 ##### 2.2实例化语法分析器
 需要先带入词法单元
 然后设置curToken和peekToken，使得词法分析器不断执行
-```go
+```go parser.go
 // 实例化语法分析器
 func New(l *lexer.Lexer) *Parser {
 	p := &Parser{l: l} //语法分析器实例
