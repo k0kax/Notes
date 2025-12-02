@@ -185,7 +185,7 @@ type Parser struct {
 需要先带入词法单元
 然后设置curToken和peekToken，使得词法分析器不断执行
 ```go parser.go
-// 实例化语法分析器
+// 初始化（实例化）语法分析器
 func New(l *lexer.Lexer) *Parser {
 	p := &Parser{l: l} //语法分析器实例
 
@@ -209,7 +209,7 @@ func (p *Parser) nextToken() {
 ```go
 func (p *Parser) ParseProgram() *ast.Program {
 
-	program := &ast.Program{}              //
+	program := &ast.Program{}              
 	program.Statements = []ast.Statement{} //接口切片集
 
 	for p.curToken.Type != token.EOF {
