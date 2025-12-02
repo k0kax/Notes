@@ -654,20 +654,10 @@ Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestLetStat
 === RUN   TestLetStatements
     parser\parser_test.go:59: parse has 4 errors
     parser\parser_test.go:61: parse error:"expected next token to be “=”,got=INT instead"   对应let y  10;
-    parser\parser_test.go:61: parse error:"expected next token to be “=”,got=LET instead"   对应
+    parser\parser_test.go:61: parse error:"expected next token to be “=”,got=LET instead"   对应let s
     parser\parser_test.go:61: parse error:"expected next token to be “IDENT”,got=INT instead" 对应let 1
     parser\parser_test.go:61: parse error:"expected next token to be “=”,got=EOF instead" 对应let ss
 --- FAIL: TestLetStatements (0.00s)
 FAIL
 FAIL    monkey_Interpreter/parser       0.129s
-```
-通过错误提示可知：
-```go
-运行 let y  10;时
-刚运行到 curtoken=x 下一个token应为=，却是10，故而expected next token to be “=”,got=INT instead
-运行let foobar = ;时
-刚运行到 curtoken=let 下一个token应为一个变量名也就是ident，却是1，故而expected next token to be “IDENT”,got=INT instead"
-
-let foobar = ;这句时把foobar解析成空了
-
 ```
