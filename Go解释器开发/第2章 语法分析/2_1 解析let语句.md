@@ -187,7 +187,9 @@ type Parser struct {
 ```go parser.go
 // 初始化（实例化）语法分析器
 func New(l *lexer.Lexer) *Parser {
-	p := &Parser{l: l} //语法分析器实例
+	p := &Parser{
+		l: l
+		errors:[]} //语法分析器实例
 
 	//读取两个词法单元，以设置curToken和peekToken
 	p.nextToken()
@@ -227,7 +229,7 @@ func (p *Parser) ParseProgram() *ast.Program {
 注意由skipWhiteSpace()跳过空白
 第一轮
 ```go
-//
+//parser.go
 type Parser struct {
 	l *lexer.Lexer //指向词法分析器实例的指针 
 
