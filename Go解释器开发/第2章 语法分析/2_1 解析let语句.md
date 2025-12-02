@@ -3,23 +3,24 @@
 语法分析器parser是将前文生成的词法单元进一步转化为抽象语法树AST
 ### 一、ast抽象语法树设计
 
-本次进实现let的语法分析
+观察let的相关代码
 ```shell
-let语句的形式如下：
-let <标识符indent>=<表达式expression>
-
 示例如下：
 let five = 5;  
 let ten =10;  
 let add = fn(x,y){  
-	x+y;  
+	return x+y;  
 };  
 let result = add(five,ten);  
 ```
-由上可知let主要用于将值绑定到给定的名称上，可以是方法也可以是变量
+可知，let的功能就是将某个值，绑定到某个给定的名称上。这个名称就是个标识符，这个值就是个表达式。综合可以抽象为：
+```
+let <标识符indent>=<表达式expression>
+```
+five、ten、add都是标识符indent，5、10和函数字面量fn(x,y)都是表达式。
 对let进行语法分析，也就是生成一个属于它的AST
 
-以let语法为例子，它需要两个不同的节点：表达式expression和语句statement。表达式会产生值，语句不会。
+实现let语法树，需要两个不同的节点：表达式expression和语句statement。表达式会产生值，语句不会。
 故而初始定义为:
 ```go 
 // ast/ast.go
