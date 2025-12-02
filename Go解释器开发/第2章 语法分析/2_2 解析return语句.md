@@ -66,6 +66,7 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 }
 ```
 相关代码：
+ast.go:
 ```go
 // ast/ast.go
 
@@ -107,31 +108,19 @@ type Program struct {
 
 // Token字面量
 func (p *Program) TokenLiteral() string {
-
     if len(p.Statements) > 0 {
-
         return p.Statements[0].TokenLiteral()
-
     } else {
-
         return ""
-
     }
-
 }
 
   
 
 // 定义所需字段
-
-  
-
 type LetStatement struct {
-
     Token token.Token // token.LET词法单元
-
     Name  *Identifier //保存绑定的标识符名称
-
     Value Expression  //产生值的表达式
 
 }
@@ -139,51 +128,33 @@ type LetStatement struct {
   
 
 //对齐前面两个接口
-
 func (ls *LetStatement) statementNode()       {}                          //语句节点
-
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
 
-  
-
 // 标识符
-
 type Identifier struct {
-
     Token token.Token //token.IDENT词法单元
-
     Value string      //字面量值
-
 }
 
   
 
 // 语句节点
-
 func (i *Identifier) expressionNode() {}
 
-  
-
 // 词法单元字面量
-
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 
-  
-
 // return相关
-
 type ReturnStatement struct {
-
     Token       token.Token //return词法单元
-
     ReturnVaule Expression  //返回值
-
 }
 
   
 
 func (rs *ReturnStatement) statementNode()       {}
-
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
 ```
+token
 ### 测试函数
