@@ -344,103 +344,277 @@ func (p *Parser) peekErrors(t token.TokenType) {
 ```go
 package parser
 
+  
+
 //语法分析器
+
 import (
-	"monkey_Interpreter/ast"
-	"monkey_Interpreter/lexer"
-	"monkey_Interpreter/token"
+
+    "fmt"
+
+    "monkey_Interpreter/ast"
+
+    "monkey_Interpreter/lexer"
+
+    "monkey_Interpreter/token"
+
 )
 
-// 语法分析器结构
-type Parser struct {
-	l *lexer.Lexer //指向词法分析器实例的指针
+  
 
-	curToken  token.Token //当前词法单元
-	peekToken token.Token //当前词法单元的下一位
+// 语法分析器结构
+
+type Parser struct {
+
+    l *lexer.Lexer //指向词法分析器实例的指针
+
+  
+
+    curToken  token.Token //当前词法单元
+
+    peekToken token.Token //当前词法单元的下一位
+
+  
+
+    errors []string //错误集合
+
 }
+
+  
 
 // 实例化语法分析器
-func New(l *lexer.Lexer) *Parser {
-	p := &Parser{l: l} //语法分析器实例
 
-	//读取两个词法单元，以设置curToken和peekToken
-	p.nextToken()
-	p.nextToken()
-	return p
+func New(l *lexer.Lexer) *Parser {
+
+    p := &Parser{l: l,
+
+        errors: []string{},
+
+    } //语法分析器实例
+
+  
+
+    //读取两个词法单元，以设置curToken和peekToken
+
+    p.nextToken()
+
+    p.nextToken()
+
+    return p
+
 }
+
+  
 
 // 获取下一个词法单元 前移curToken和peekToken
+
 func (p *Parser) nextToken() {
-	p.curToken = p.peekToken
-	p.peekToken = p.l.NextToken()
+
+    p.curToken = p.peekToken
+
+    p.peekToken = p.l.NextToken() //递归
+
 }
 
-// 解析程序语法
+  
+
+// 入口点
+
+// 解析程序AST的根节点
+
 func (p *Parser) ParseProgram() *ast.Program {
 
-	program := &ast.Program{}              //
-	program.Statements = []ast.Statement{} //
+  
 
-	for p.curToken.Type != token.EOF {
-		stmt := p.parseStatement()
-		if stmt != nil {
-			program.Statements = append(program.Statements, stmt)
-		}
-		p.nextToken() //下移
-	}
-	return program
+    program := &ast.Program{}              //声明构造ast根节点program
+
+    program.Statements = []ast.Statement{} //语句接口切片集
+
+  
+
+    for p.curToken.Type != token.EOF { //碰到词法法单元Token EOF文件结尾 表示已将遍历完终止
+
+        stmt := p.parseStatement() //解析具体语法
+
+        if stmt != nil {
+
+            program.Statements = append(program.Statements, stmt) //不断解析语句，并且存到statements切片中
+
+        }
+
+        p.nextToken() //下移
+
+    }
+
+  
+
+    return program
+
 }
+
+  
 
 // 解析语句
+
 func (p *Parser) parseStatement() ast.Statement {
-	switch p.curToken.Type {
-	case token.LET://识别出let
-		return p.parseLetStatement()
-	default:
-		return nil
-	}
+
+    switch p.curToken.Type {
+
+    case token.LET:
+
+        return p.parseLetStatement()
+
+    default:
+
+        return nil
+
+    }
+
 }
 
-// 解析let语句
+  
+
+// 解析let语句 以为例let x=5;
+
+// 此时：curtoken=let peektoken=x
+
 func (p *Parser) parseLetStatement() *ast.LetStatement {
-	stmt := &ast.LetStatement{Token: p.curToken}
 
-	if !p.expectPeek(token.IDENT) {//识别出 标识符,并进行移位跳转
-		return nil
-	}
-	//将当前词法单元作为标识符的 Token 字段，并将其字面值作为标识符的值赋给 stmt.Name
-	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+    //1.初始化 LetStatement 节点：把当前 curToken（就是 LET 类型的 "let"）绑定到节点
 
-	if !p.expectPeek(token.ASSIGN) {//识别出 =
-		return nil
-	}
+    stmt := &ast.LetStatement{Token: p.curToken}
 
-	//移动到下一个词法单元
-	// TODO: 跳过对表达式的处理，直到遇见分号
-	if !p.curTokenIs(token.SEMICOLON) {//识别出 ;
-		p.nextToken()
-	}
-	return stmt
+    //运行后：stmt.token=let curtoken=let peektoken=x
+
+  
+
+    //2.检测标识符
+
+    //检测下一个token(也就是peektoken)不是标识符indent，不是则退出（此处检测到为x是标识符，不退）,是则peektoken、curtoken后移一位
+
+    if !p.expectPeek(token.IDENT) { //执行expectPeek(),检测到peektoken.type=IDENT,不执行{}内容，peektoken、curtoken都后移一位
+
+        return nil
+
+    }
+
+    //运行后：stmt.token=let curtoken=x peektoken = "="
+
+  
+
+    //3.
+
+    //将当前词法单元作为标识符的 Token 字段，并将其字面值literal作为标识符indent的值value赋给 stmt.Name
+
+    stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+
+    //运行后：stmt.token=let curtoken=x peektoken = "=" stmt.Name=&{Token: IDENT("x"), Value: "x"}
+
+  
+
+    //4.检测等号=
+
+    //检查下一个token（peektoken）,,是则继续，不是则退出，peektoken、curtoken后移一位
+
+    if !p.expectPeek(token.ASSIGN) {
+
+        return nil
+
+    }
+
+    //运行后：stmt.token=let curtoken="=" peektoken = "5"  stmt.Name=&{Token: IDENT("x"), Value: "x"}
+
+  
+
+    //5.TODO: 跳过对表达式的处理parseExpression()
+
+    //运行后：stmt.token=let curtoken="5" peektoken = ";"  stmt.Name=&{Token: IDENT("x"), Value: "x"} tmt.Value = &IntegerLiteral {Token: INT ("5"), Value: 5}
+
+  
+
+    //6.检测分号（;）     处理语句末尾的分号（;）
+
+    //检测当前token（curtoken）是否是分号（;）
+
+    if !p.curTokenIs(token.SEMICOLON) { //是，则不需要移动
+
+        p.nextToken() //不是，则peektoken、curtoken后移一位，直接解析下一句
+
+    }
+
+    //运行后：stmt.token=let curtoken=";" peektoken = ""  stmt.Name=&{Token: IDENT("x"), Value: "x"} stmt.
+
+  
+
+    //7.直接返回stmt
+
+    return stmt
+
+    //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
+
+  
+
 }
+
+  
+
+// 辅助断言函数
 
 // 当前token判断
+
 func (p *Parser) curTokenIs(t token.TokenType) bool {
-	return p.curToken.Type == t
+
+    return p.curToken.Type == t
+
 }
+
+  
 
 // 下一个token判断
+
 func (p *Parser) peekTokenIs(t token.TokenType) bool {
-	return p.peekToken.Type == t
+
+    return p.peekToken.Type == t
+
 }
 
+  
+
 // 用于判断下一个词法单元的类型是否与给定的类型匹配，并移动到下一个词法单元
+
 func (p *Parser) expectPeek(t token.TokenType) bool {
-	if p.peekTokenIs(t) {
-		p.nextToken()//移动到下一个词法单元
-		return true
-	} else {
-		return false
-	}
+
+    if p.peekTokenIs(t) {
+
+        p.nextToken() //后移一位 curtoken变成peektoken,peektoken变成peektoken的下一位
+
+        return true
+
+    } else {
+
+        p.peekErrors(t)
+
+        return false
+
+    }
+
+}
+
+  
+
+// 错误检测
+
+func (p *Parser) Errors() []string {
+
+    return p.errors
+
+}
+
+  
+
+func (p *Parser) peekErrors(t token.TokenType) {
+    msg := fmt.Sprintf("expected next token to be “%s”,got=%s instead", t, p.peekToken.Type)
+    p.errors = append(p.errors, msg)
 }
 
 ```
