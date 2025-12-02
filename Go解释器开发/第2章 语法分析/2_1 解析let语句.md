@@ -637,3 +637,9 @@ ok      monkey_Interpreter/parser       0.119s
 PS E:\Codes\Go\monkey_Interpreter\parser> 
 ```
 如果进行了修改：
+```go
+let x = 5;
+let y  10;
+let foobar = ;
+let 1;
+```
