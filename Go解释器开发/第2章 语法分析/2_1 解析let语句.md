@@ -160,8 +160,34 @@ func (i *Identifier) expressionNode() {}
 
 // 词法单元字面量
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
-
 ```
+### 二、此法单元设计
+要实现的let的token有多种情况，如
+```shell
+let five = 5;  //字面量
+let ten =10;  //字面量
+let add = fn(x,y){  //表达式
+	x+y;  
+};  
+let result = add(five,ten);  //表达式
+```
+首先第一个字段是变量名，还需要一个指向等号右侧的表达式。这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
+```go 
+//ast.go
+type LetStatement struct {
+	Token token.Token // token.LET词法单元
+	Name *Identifier //变量名 标识符
+	Value Expression //表达式
+}
+```
+还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral
+```go
+//ast.go
+func (ls *LetStatement) statementNode() {}
+func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+```
+
+
 
 ### 二、语法分析器
 ##### 2.1语法分析器的结构
