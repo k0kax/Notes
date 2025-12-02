@@ -588,6 +588,7 @@ func TestLetStatements(t *testing.T) {
 		{"x"},
 		{"y"},
 		{"foobar"},
+		{"s"},
 	}
 
 	//遍历
@@ -638,10 +639,12 @@ PS \parser>
 ```
 如果进行了修改：
 ```go
-let x = 5;
-let y  10;
-let foobar = ;
-let 1;
+input := `let x = 5;
+    let y  10;//缺=
+let foobar = ;//缺值
+let s=1
+let s
+let 1`
 ```
 结果：
 ```go
