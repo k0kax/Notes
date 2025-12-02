@@ -227,14 +227,16 @@ func (p *Parser) ParseProgram() *ast.Program {
 注意由skipWhiteSpace()跳过空白
 第一轮
 ```go
+//
 type Parser struct {
 	l *lexer.Lexer //指向词法分析器实例的指针 
 
 	curToken  token.Token //当前词法单元 let
 	peekToken token.Token //当前词法单元的下一位 x
+	errors []string//语法处理时的错误集合
 }
 ```
-
+注意
 ```go
 type Token struct {  
 Type TokenType //LET
