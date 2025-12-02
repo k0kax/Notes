@@ -613,3 +613,16 @@ func (p *Parser) peekErrors(t token.TokenType) {
 }
 ```
 ### 测试函数
+parser_test.go
+```go
+package parser
+
+import (
+    "monkey_Interpreter/ast"
+    "monkey_Interpreter/lexer"
+    "testing"
+
+)
+
+
+```
