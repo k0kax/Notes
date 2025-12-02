@@ -53,7 +53,7 @@ type Expression interface {
 
 func (i *Identifier) expressionNode() {}
 ```
-#### 1.2结构体
+#### 1.2 程序结构体
 程序结构体Program，也就是根节点，包含Statement语句接口的切片Statements
 ```go
 type Program struct {
@@ -77,14 +77,6 @@ func (p *Program) TokenLiteral() string {
 
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
 包括词法单元Token、标识符名称、表达式（可能是值，也可能是方法公式之类的）
-```go
-type LetStatement struct {
-	Token token.Token // token.LET词法单元
-	Name  *Identifier //保存绑定的标识符Ident名称
-	Value Expression  //产生值的表达式expression
-}
-```
-
 ```
 要实现的let的token有多种情况，如
 ```shell
@@ -95,13 +87,14 @@ let add = fn(x,y){  //表达式
 };  
 let result = add(five,ten);  //表达式
 ```
-首先第一个字段是变量名，还需要一个指向等号右侧的表达式。这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
+首先第一个字段是变量名，还需要一个指向等号右侧的表达式。
+这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
 ```go 
 //ast.go
 type LetStatement struct {
 	Token token.Token // token.LET词法单元
-	Name *Identifier //变量名 标识符
-	Value Expression //表达式
+	Name  *Identifier //保存绑定的标识符Ident名称
+	Value Expression  //产生值的表达式expression
 }
 ```
 还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral
@@ -164,13 +157,11 @@ type Expression interface {
 }
 
 // 程序 根节点
-
 type Program struct {
 	Statements []Statement //接口类型的切片
 }
 
 // Token字面量
-
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
 		return p.Statements[0].TokenLiteral()
@@ -180,7 +171,6 @@ func (p *Program) TokenLiteral() string {
 }
 
 // 定义所需字段
-
 type LetStatement struct {
 	Token token.Token // token.LET词法单元
 	Name  *Identifier //保存绑定的标识符名称
@@ -191,7 +181,6 @@ func (ls *LetStatement) statementNode()       {}                          //语�
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
 
 // 标识符
-
 type Identifier struct {
 	Token token.Token //token.IDENT词法单元
 	Value string      //字面量值
@@ -202,7 +191,8 @@ func (i *Identifier) expressionNode() {}
 
 // 词法单元字面量
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
-### 三、语法分析器
+```
+### 二、语法分析器设计
 ##### 2.1语法分析器的结构
 包括词法单元指针lexer，当前词法单元curToken，下一个词法单元peekToken，此处和[[1_1词法分析器]]的position/readPosition 类似
 ```go parser.go
