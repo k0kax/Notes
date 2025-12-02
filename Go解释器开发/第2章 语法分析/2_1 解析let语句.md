@@ -256,80 +256,7 @@ func (p *Parser) parseStatement() ast.Statement {
 }
 ```
 ##### 解析let语句parseLetStatement()
-先把当前词法单元放进Let的词法结构体中
-判断当前词法单元的下一个(x)
-```
-	curToken :let
-	peekToken :x
-```
-
-```go
-type Token struct {  
-	Type TokenType //IDENT
-	// 字面量  
-	Literal string  //X
-}
-```
-是否是标识符，是则进行移位操作，移位后如下
-```
-curToken:x
-peekToken:=
-```
-不是则退出
-```go
-//字面量
-	if !p.expectPeek(token.IDENT) {//移位
-		return nil
-	}
-	//将当前词法单元作为标识符的 Token 字段，并将其字面值作为标识符的值赋给 stmt.Name
-	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
-```
-然后将相关的token字面量塞到标识符indent结构体的token/值中
-```go
-type Identifier struct {  
-	Token token.Token //token.IDENT  
-	Value string //  x
-}
-```
-此时Identifier就会变成
-```go
-Token : INENT//字面量
-Value : x //值
-```
-
-进入下一轮
-```
-	curToken  ：x
-	peekToken ：=
-```
- ***
-```go
-	//移动到下一个词法单元
-	if !p.curTokenIs(token.SEMICOLON) {
-		p.nextToken()
-	}
-```
-判断当前词法单元下一个(=)是否是赋值符号(=),是则移位
-不是则退出
-
-进入下一轮
-```go
-type Parser struct {
-	l *lexer.Lexer //指向词法分析器实例的指针 
-
-	curToken  token.Token //当前词法单元 2
-	peekToken token.Token //当前词法单元的下一位 ;
-}
-```
-***
-```go
-//移动到下一个词法单元  
-if !p.curTokenIs(token.SEMICOLON) {  
-	p.nextToken()  
-}
-```
-判断当前是否是(；)，是则移动到下一个单元，不是则退出
-以下是具体的解析let语句的函数parseLetStatement()：
+具体如下：
 ```go
 // 解析let语句 以为例let x=5;
 //此时：curtoken=let peektoken=x
@@ -371,7 +298,6 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
     //6.直接返回stmt
     return stmt 
     //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
-
 }
 ```
 ##### 判断函数
