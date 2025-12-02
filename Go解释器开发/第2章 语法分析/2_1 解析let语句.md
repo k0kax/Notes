@@ -631,10 +631,10 @@ func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 测试结果
 正常测试：
 ```go
-PS E:\Codes\Go\monkey_Interpreter\parser> go test 
+PS \parser> go test 
 PASS
 ok      monkey_Interpreter/parser       0.119s
-PS E:\Codes\Go\monkey_Interpreter\parser> 
+PS \parser> 
 ```
 如果进行了修改：
 ```go
@@ -650,8 +650,12 @@ Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestLetStat
 === RUN   TestLetStatements
     parser\parser_test.go:55: parse has 2 errors
    \parser\parser_test.go:57: parse error:"expected next token to be “=”,got=INT instead"
-    e:\Codes\Go\monkey_Interpreter\parser\parser_test.go:57: parse error:"expected next token to be “IDENT”,got=INT instead"
+    \parser\parser_test.go:57: parse error:"expected next token to be “IDENT”,got=INT instead"
 --- FAIL: TestLetStatements (0.00s)
 FAIL
 FAIL    monkey_Interpreter/parser       0.128s
+```
+通过错误提示可知：
+```go
+
 ```
