@@ -255,7 +255,7 @@ func (p *Parser) parseStatement() ast.Statement {
 	}
 }
 ```
-##### 解析let语句
+##### 解析let语句parseLetStatement()
 先把当前词法单元放进Let的词法结构体中
 判断当前词法单元的下一个(x)
 ```
