@@ -20,7 +20,7 @@ let <标识符indent>=<表达式expression>
 five、ten、add都是标识符indent，5、10和函数字面量fn(x,y)都是表达式。
 对let进行语法分析，也就是生成一个属于它的AST
 
-实现let语句的语法树，需要两个不同的节点：表达式expression和语句statement（其他语句）。表达式会产生值，语句不会。
+实现let语句的语法树，需要两个不同的节点：表达式expression（纯expression）和语句statement（expression包含它）。表达式会产生值，语句不会。
 故而初始定义为:
 ```go 
 // ast/ast.go
@@ -82,7 +82,7 @@ type Identifier struct {
 	Value string //字面量的值
 }
 ```
-还需要对齐它的表达式接口expressionNode()和字面量接口TokenLiteral()
+还需要对齐它的表达式接口expressionNode()及其字面量接口TokenLiteral()
 ```go
 //ast.go
 // 表达式节点
@@ -91,7 +91,6 @@ func (i *Identifier) expressionNode() {}
 // 词法单元字面量
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 ```
-
 总代码ast/ast.go
 ```go
 // ast/ast.go
@@ -102,7 +101,6 @@ package ast
 //语法分析器将文本或者词法单元形式的源码作为输入，产生一个表示该源码的数据结构。
 import "monkey_Interpreter/token"
 
-//三个接口
 
 // 接口1
 // 用于返回字面量
@@ -113,7 +111,6 @@ type Node interface {
 
 // 接口2
 // 语句
-
 type Statement interface {
 	Node
 	statementNode() //语句节点
@@ -121,7 +118,6 @@ type Statement interface {
 
 // 接口3
 // 表达式
-
 type Expression interface {
 	Node
 	expressionNode() //表达式节点
