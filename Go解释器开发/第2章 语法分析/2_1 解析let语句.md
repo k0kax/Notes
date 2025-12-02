@@ -39,14 +39,13 @@ type Expression interface {//表达式接口
 ```
 它包含了三个接口，Node节点(ast每个节点都要实现，不然连不到一起)，statement语句接口，expression表达式接口
 #### 1.2 程序结构体
-程序结构体Program，也就是根节点，包含Statement语句接口的切片Statements
+程序结构体Program，也就是整个AST的根节点，包含Statement语句接口的切片Statements
 ```go
+// ast/ast.go
 type Program struct {
 	Statements []Statement //接口类型的切片
 }
-```
-##### 1.3词法单元的Token字面量Literal
-```go
+//获取字面量
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
 		return p.Statements[0].TokenLiteral()//返回接口第一个token的字面量
