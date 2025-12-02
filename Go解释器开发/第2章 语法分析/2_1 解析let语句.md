@@ -284,7 +284,7 @@ peekToken:=
 	//将当前词法单元作为标识符的 Token 字段，并将其字面值作为标识符的值赋给 stmt.Name
 	stmt.Name = &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 ```
-然后将相关的token/字面量塞到标识符结构体的token/值中
+然后将相关的token字面量塞到标识符indent结构体的token/值中
 ```go
 type Identifier struct {  
 	Token token.Token //token.IDENT  
