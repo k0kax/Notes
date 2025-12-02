@@ -188,8 +188,9 @@ type Parser struct {
 // 初始化（实例化）语法分析器
 func New(l *lexer.Lexer) *Parser {
 	p := &Parser{
-		l: l
-		errors:[]} //语法分析器实例
+			l: l,
+			errors:[]string,
+		} //语法分析器实例
 
 	//读取两个词法单元，以设置curToken和peekToken
 	p.nextToken()
