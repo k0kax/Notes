@@ -38,7 +38,7 @@ type Expression interface {//表达式接口
 }
 ```
 它包含了三个接口，Node节点(ast每个节点都要实现，不然连不到一起)，statement语句接口，expression表达式接口
-#### 1.2 程序结构体
+#### AST根节点program
 程序结构体Program，也就是整个AST的根节点，包含Statement语句接口的切片Statements
 ```go
 // ast/ast.go
@@ -54,23 +54,10 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 ```
-#### 1.4 let语句专有的结构体
+#### let语句的抽象语法树AST
 此处的AST抽象语法树采取如下结构
-
-
-
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
 包括词法单元Token、标识符名称Name、表达式express（可能是值，也可能是方法公式之类的）
-```
-要实现的let的token有多种情况，如
-```shell
-let five = 5;  //字面量
-let ten =10;  //字面量
-let add = fn(x,y){  //表达式
-	x+y;  
-};  
-let result = add(five,ten);  //表达式
-```
 首先第一个字段是变量名Name，它对应字面量结构体Ident，还需要一个指向等号右侧的表达式Value，对应expression。
 这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
 ```go 
