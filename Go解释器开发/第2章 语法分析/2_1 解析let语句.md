@@ -643,3 +643,15 @@ let y  10;
 let foobar = ;
 let 1;
 ```
+结果：
+```go
+Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestLetStatements$ monkey_Interpreter/parser
+
+=== RUN   TestLetStatements
+    parser\parser_test.go:55: parse has 2 errors
+   \parser\parser_test.go:57: parse error:"expected next token to be “=”,got=INT instead"
+    e:\Codes\Go\monkey_Interpreter\parser\parser_test.go:57: parse error:"expected next token to be “IDENT”,got=INT instead"
+--- FAIL: TestLetStatements (0.00s)
+FAIL
+FAIL    monkey_Interpreter/parser       0.128s
+```
