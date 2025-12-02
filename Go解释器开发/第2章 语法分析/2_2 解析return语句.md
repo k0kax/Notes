@@ -5,8 +5,24 @@ return 10;
 return add(15);
 ```
 可以抽象为`return <表达式>;`
+### 添加return的token词法单元
+```go
+//token.go
+const(
+//......
 
-### 构建return语句的AST
+// 关键字
+    FUNCTION = "FUNCTION"
+    LET      = "LET"
+    //*********
+    IF     = "IF"
+    ELSE   = "ELSE"
+    RETURN = "RETURN"
+    
+//......
+)
+```
+### 添加return语句的AST
 ```go 
 //ast.go
 // return相关
@@ -33,7 +49,7 @@ func (p *Parser) parseStatement() ast.Statement {
 	}
 }
 ```
-设置解析函数
+设置解析函数parseReturnStatement()
 ```go
 //parser.go
 
