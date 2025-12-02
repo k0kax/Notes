@@ -1,7 +1,7 @@
 > 该篇涉及大量接口相关，注意查看相关文章[[../../Go基础/接口Interface|接口Interface]]
 
 语法分析器parser是将前文生成的词法单元进一步转化为抽象语法树AST
-### 一、抽象语法树AST
+### 一、ast词法设计
 
 本次进实现let的语法分析
 ```shell
@@ -18,8 +18,6 @@ let result = add(five,ten);
 ```
 由上可知let主要用于将值绑定到给定的名称上，可以是方法也可以是变量
 对let进行语法分析，也就是生成一个属于它的AST
-
-
 #### 1.1三个接口
 一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
 ```go
@@ -62,7 +60,7 @@ type Program struct {
 	Statements []Statement //接口类型的切片
 }
 ```
-###### 1.3词法单元的Token字面量Literal
+##### 1.3词法单元的Token字面量Literal
 ```go
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
@@ -86,6 +84,50 @@ type LetStatement struct {
 	Value Expression  //产生值的表达式expression
 }
 ```
+
+```
+要实现的let的token有多种情况，如
+```shell
+let five = 5;  //字面量
+let ten =10;  //字面量
+let add = fn(x,y){  //表达式
+	x+y;  
+};  
+let result = add(five,ten);  //表达式
+```
+首先第一个字段是变量名，还需要一个指向等号右侧的表达式。这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
+```go 
+//ast.go
+type LetStatement struct {
+	Token token.Token // token.LET词法单元
+	Name *Identifier //变量名 标识符
+	Value Expression //表达式
+}
+```
+还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral
+```go
+//ast.go
+func (ls *LetStatement) statementNode() {}
+func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+```
+为了绑定标识符x, `let x=5` 变量x为Ident标识符结构体
+```go
+//ast.go
+type Identifier struct {
+	Token token.Token // token.IDENT词法单元
+	Value string //字面量的值
+}
+```
+还需要对齐它的表达式接口expressionNode()和字面量接口TokenLiteral()
+```go
+//ast.go
+// 表达式节点
+func (i *Identifier) expressionNode() {}
+
+// 词法单元字面量
+func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
+```
+
 总代码ast/ast.go
 ```go
 // ast/ast.go
@@ -160,36 +202,7 @@ func (i *Identifier) expressionNode() {}
 
 // 词法单元字面量
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
-```
-### 二、此法单元设计
-要实现的let的token有多种情况，如
-```shell
-let five = 5;  //字面量
-let ten =10;  //字面量
-let add = fn(x,y){  //表达式
-	x+y;  
-};  
-let result = add(five,ten);  //表达式
-```
-首先第一个字段是变量名，还需要一个指向等号右侧的表达式。这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
-```go 
-//ast.go
-type LetStatement struct {
-	Token token.Token // token.LET词法单元
-	Name *Identifier //变量名 标识符
-	Value Expression //表达式
-}
-```
-还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral
-```go
-//ast.go
-func (ls *LetStatement) statementNode() {}
-func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
-```
-
-
-
-### 二、语法分析器
+### 三、语法分析器
 ##### 2.1语法分析器的结构
 包括词法单元指针lexer，当前词法单元curToken，下一个词法单元peekToken，此处和[[1_1词法分析器]]的position/readPosition 类似
 ```go parser.go
