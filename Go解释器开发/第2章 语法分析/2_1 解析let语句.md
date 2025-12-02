@@ -18,25 +18,30 @@ let result = add(five,ten);
 ```
 由上可知let主要用于将值绑定到给定的名称上，可以是方法也可以是变量
 对let进行语法分析，也就是生成一个属于它的AST
-#### 1.1 三个接口
-以let语法为例子，
-一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
-```go
-type Node interface {
+
+以let语法为例子，它需要两个不同的节点：表达式expression和语句statement。表达式会产生值，语句不会。
+故而初始定义为:
+```go 
+// ast/ast.go
+package ast
+type Node interface {//节点接口
 	TokenLiteral() string
 }
+type Statement interface {//语句接口
+	Node
+	statementNode()
+}
+type Expression interface {//表达式接口
+	Node
+	expressionNode()
+}
 ```
+它包含了三个接口，Node节点(ast每个节点都要实现，不然连不到一起)，statement语句接口，expression表达式接口
+
+一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
 对应LetStatement的TokenLiteral()方法，用于返回==字面值Literal==
 ```go
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal } //词法单元字面值
-```
-语句接口Statement,包括节点Node和语句节点方法statementNode()
-```go
-type Statement interface {
-	Node   //嵌套了Node
-	statementNode() //语句节点
-}
-func (ls *LetStatement) statementNode()       {}  
 ```
 上文涉及到一个==标识符Ident==的结构体,包括对应的词法单元类型和值
 ```go
@@ -47,11 +52,6 @@ type Identifier struct {
 ```
 表达式expression接口，嵌套了Node接口的所有方法和expressionNode()方法
 ```go
-type Expression interface {
-	Node
-	expressionNode() //表达式节点
-}
-
 func (i *Identifier) expressionNode() {}
 ```
 #### 1.2 程序结构体
