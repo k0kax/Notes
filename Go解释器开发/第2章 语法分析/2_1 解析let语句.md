@@ -17,10 +17,9 @@ let add = fn(x,y){
 let result = add(five,ten);  
 ```
 由上可知let主要用于将值绑定到给定的名称上，可以是方法也可以是变量
-
 对let进行语法分析，也就是生成一个属于它的AST
-首先我们需要确定一下
-#### 1.1三个接口
+#### 1.1 三个接口
+
 一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
 ```go
 type Node interface {
