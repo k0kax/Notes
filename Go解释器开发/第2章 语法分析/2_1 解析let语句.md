@@ -17,7 +17,9 @@ let add = fn(x,y){
 let result = add(five,ten);  
 ```
 由上可知let主要用于将值绑定到给定的名称上，可以是方法也可以是变量
+
 对let进行语法分析，也就是生成一个属于它的AST
+首先我们需要确定一下
 #### 1.1三个接口
 一个接口Node节点，包含TokenLiteral()方法，用于返回==字面量Literal==
 ```go
@@ -76,7 +78,7 @@ func (p *Program) TokenLiteral() string {
 
 
 ![](https://raw.githubusercontent.com/k0kax/PicGo/main/images20251130150722302.png)
-包括词法单元Token、标识符名称、表达式（可能是值，也可能是方法公式之类的）
+包括词法单元Token、标识符名称Name、表达式express（可能是值，也可能是方法公式之类的）
 ```
 要实现的let的token有多种情况，如
 ```shell
@@ -87,7 +89,7 @@ let add = fn(x,y){  //表达式
 };  
 let result = add(five,ten);  //表达式
 ```
-首先第一个字段是变量名，还需要一个指向等号右侧的表达式。
+首先第一个字段是变量名Name，它对应字面量结构体Ident，还需要一个指向等号右侧的表达式Value，对应expression。
 这个表达式不能仅是字面量，还能使指向任何表达式。因此LetStatement需要设计为：
 ```go 
 //ast.go
@@ -97,7 +99,7 @@ type LetStatement struct {
 	Value Expression  //产生值的表达式expression
 }
 ```
-还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral
+还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral()
 ```go
 //ast.go
 func (ls *LetStatement) statementNode() {}
