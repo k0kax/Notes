@@ -329,6 +329,7 @@ if !p.curTokenIs(token.SEMICOLON) {
 }
 ```
 判断当前是否是(；)，是则移动到下一个单元，不是则退出
+以下是具体的解析let语句的函数parseLetStatement()：
 ```go
 // 解析let语句 以为例let x=5;
 //此时：curtoken=let peektoken=x
