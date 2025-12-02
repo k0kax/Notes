@@ -52,5 +52,16 @@ func (p *Parser) parseStatement() ast.Statement {
 设置解析函数parseReturnStatement()
 ```go
 //parser.go
+func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 
+    stmt := &ast.ReturnStatement{Token: p.curToken}
+    p.nextToken()
+    //TODO:跳过对表达式的处理，直接遇到分号
+
+    for !p.curTokenIs(token.SEMICOLON) {
+        p.nextToken()
+    }
+
+    return stmt
+}
 ```
