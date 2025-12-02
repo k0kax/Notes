@@ -510,113 +510,57 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 
     //运行后：stmt.token=let curtoken=x peektoken = "=" stmt.Name=&{Token: IDENT("x"), Value: "x"}
 
-  
-
     //4.检测等号=
-
     //检查下一个token（peektoken）,,是则继续，不是则退出，peektoken、curtoken后移一位
-
     if !p.expectPeek(token.ASSIGN) {
-
         return nil
-
     }
-
     //运行后：stmt.token=let curtoken="=" peektoken = "5"  stmt.Name=&{Token: IDENT("x"), Value: "x"}
-
-  
-
+    
     //5.TODO: 跳过对表达式的处理parseExpression()
-
     //运行后：stmt.token=let curtoken="5" peektoken = ";"  stmt.Name=&{Token: IDENT("x"), Value: "x"} tmt.Value = &IntegerLiteral {Token: INT ("5"), Value: 5}
 
-  
-
     //6.检测分号（;）     处理语句末尾的分号（;）
-
     //检测当前token（curtoken）是否是分号（;）
-
     if !p.curTokenIs(token.SEMICOLON) { //是，则不需要移动
-
         p.nextToken() //不是，则peektoken、curtoken后移一位，直接解析下一句
-
     }
-
     //运行后：stmt.token=let curtoken=";" peektoken = ""  stmt.Name=&{Token: IDENT("x"), Value: "x"} stmt.
-
-  
-
+    
     //7.直接返回stmt
-
     return stmt
-
     //LetStatement {Token: LET ("let"), Name: Identifier ("x"), Value: IntegerLiteral (5)}
-
-  
-
 }
-
-  
-
 // 辅助断言函数
-
 // 当前token判断
-
 func (p *Parser) curTokenIs(t token.TokenType) bool {
-
     return p.curToken.Type == t
-
 }
-
-  
 
 // 下一个token判断
-
 func (p *Parser) peekTokenIs(t token.TokenType) bool {
-
     return p.peekToken.Type == t
-
 }
-
-  
 
 // 用于判断下一个词法单元的类型是否与给定的类型匹配，并移动到下一个词法单元
-
 func (p *Parser) expectPeek(t token.TokenType) bool {
-
     if p.peekTokenIs(t) {
-
         p.nextToken() //后移一位 curtoken变成peektoken,peektoken变成peektoken的下一位
-
         return true
-
     } else {
-
         p.peekErrors(t)
-
         return false
-
     }
-
 }
-
-  
 
 // 错误检测
-
 func (p *Parser) Errors() []string {
-
     return p.errors
-
 }
-
-  
-
 func (p *Parser) peekErrors(t token.TokenType) {
     msg := fmt.Sprintf("expected next token to be “%s”,got=%s instead", t, p.peekToken.Type)
     p.errors = append(p.errors, msg)
 }
-
 ```
 ### 三、测试函数
 
