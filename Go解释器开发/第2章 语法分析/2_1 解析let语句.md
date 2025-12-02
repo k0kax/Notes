@@ -20,7 +20,7 @@ let <标识符indent>=<表达式expression>
 five、ten、add都是标识符indent，5、10和函数字面量fn(x,y)都是表达式。
 对let进行语法分析，也就是生成一个属于它的AST
 
-实现let语法树，需要两个不同的节点：表达式expression和语句statement。表达式会产生值，语句不会。
+实现let语句的语法树，需要两个不同的节点：表达式expression和语句statement（其他语句）。表达式会产生值，语句不会。
 故而初始定义为:
 ```go 
 // ast/ast.go
@@ -64,8 +64,8 @@ func (p *Program) TokenLiteral() string {
 //ast.go
 type LetStatement struct {
 	Token token.Token // token.LET词法单元
-	Name  *Identifier //保存绑定的标识符Ident名称
-	Value Expression  //产生值的表达式expression
+	Name  *Identifier //保存绑定的标识符Ident名称 字面量类型
+	Value Expression  //产生值的表达式expression 表达式接口
 }
 ```
 还需要实现它的两个接口，语法节点statementNode()和token字面量TokenLiteral()
