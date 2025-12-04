@@ -8,6 +8,7 @@
 
 
 ## 构建表达式expression的AST
+
 ```go
 //ast.go
 type ExpressionStatement struct {
@@ -18,7 +19,7 @@ type ExpressionStatement struct {
 func (es *ExpressionStatement) statementNode()       {}
 func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
 ```
-表达式语句的结构体主要由两个字段组成Token和Expression(保存表达式)
+表达式语句ExpressionStatement的结构体主要由两个字段组成Token和Expression(保存表达式)，因为它的结构体引用了Expression接口，故也可以使用
 
 
 
