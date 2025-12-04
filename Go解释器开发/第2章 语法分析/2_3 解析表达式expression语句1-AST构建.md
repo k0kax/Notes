@@ -119,3 +119,12 @@ func TestString(t *testing.T) {
     }
 }
 ```
+测试结果：
+```go
+Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestString$ monkey_Interpreter/ast
+
+=== RUN   TestString
+--- PASS: TestString (0.00s)
+PASS
+ok      monkey_Interpreter/ast  0.136s
+```

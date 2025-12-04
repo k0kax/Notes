@@ -10,7 +10,7 @@ type (
 )
 ```
 
-在Parser结构体添加对应映射
+在Parser结构体添加对应映射，即不同的词法单元对应不同的注册方法
 ```go
 //parser.go
 type Parser struct {
@@ -26,5 +26,17 @@ type Parser struct {
     infixParseFns  map[token.TokenType]infixParseFn
 }
 ```
+还需要向映射中添加内容的方法
+```go 
+//parser.go
 
+// 辅助函数
+// 向前缀、中缀解析函数映射表添加数据
+func (p *Parser) registerPrefix(tokenType token.TokenType, fn prefixParseFn) {
+    p.prefixParseFns[tokenType] = fn
+}
 
+func (p *Parser) registerInfix(tokenType token.TokenType, fn infixParseFn) {
+    p.infixParseFns[tokenType] = fn
+}
+```
