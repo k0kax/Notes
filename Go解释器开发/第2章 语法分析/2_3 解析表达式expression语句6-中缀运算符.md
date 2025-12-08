@@ -170,4 +170,10 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 	return leftExp //调用该解析函数
 }
 ```
+这个方法非常精妙，涉及到左对齐，递归调用，以及为啥用for循环而不用if，将在下篇中举例介绍
 
+测试函数
+```go
+//parser_test.go
+
+```
