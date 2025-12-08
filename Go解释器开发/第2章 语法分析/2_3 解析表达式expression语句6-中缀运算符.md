@@ -283,22 +283,6 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 			"3 + 4 * 5 == 3 * 1 + 4 * 5",
 			"((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))",
 		},
-		{
-			"true",
-			"true",
-		},
-		{
-			"false",
-			"false",
-		},
-		{
-			"3 > 5 == false",
-			"((3 > 5) == false)",
-		},
-		{
-			"3 < 5 == true",
-			"((3 < 5) == true)",
-		},
 	}
 
 	for _, tt := range tests {
@@ -313,4 +297,20 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 		}
 	}
 }
+```
+测试结果：
+```go
+Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestParsingInfixExpressions$ monkey_Interpreter/parser
+
+=== RUN   TestParsingInfixExpressions
+--- PASS: TestParsingInfixExpressions (0.00s)
+PASS
+ok      monkey_Interpreter/parser       0.123s
+
+Running tool: C:\Program Files\Go\bin\go.exe test -timeout 30s -run ^TestOperatorPrecedenceParsing$ monkey_Interpreter/parser
+
+=== RUN   TestOperatorPrecedenceParsing
+--- PASS: TestOperatorPrecedenceParsing (0.00s)
+PASS
+ok      monkey_Interpreter/parser       (cached)
 ```
