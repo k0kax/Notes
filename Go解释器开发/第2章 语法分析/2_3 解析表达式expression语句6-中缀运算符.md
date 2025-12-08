@@ -120,4 +120,54 @@ func New(l *lexer.Lexer) *Parser {
 }
 ```
 
-设置parseExpression方法
+普拉特语法分析器的**核心**---设置parseExpression方法
+```go
+// 解析表达式 普卡特语法解析器核心 1+2*3
+func (p *Parser) parseExpression(precedence int) ast.Expression {
+	// 第一步：找当前token对应的「前缀解析函数」
+	prefix := p.prefixParseFns[p.curToken.Type]
+	//当前token：1，注册前缀解析函数prefix也就是parseIntegerLiteral()
+	// 第二步：如果没有对应的前缀解析函数，报错并返回nil
+	if prefix == nil {
+		p.noPrefixParseFnError(p.curToken.Type)
+		return nil
+	}
+
+	// 第三步：执行前缀解析函数，得到表达式的「左部分」
+	leftExp := prefix()
+	// 执行parseIntegerLiteral()，leftExp = &ast.IntegerLiteral{Value: 1}
+	// 此时 token 状态：curToken=INT(1)，peekToken=PLUS(+)
+
+	// 第四步：循环解析「中缀表达式」（核心循环，处理优先级）左结合
+	for !p.peekTokenIs(token.SEMICOLON) && precedence < p.peekPrecedence() {
+		// 循环条件（两个都满足才继续）：
+		// 1. !p.peekTokenIs(token.SEMICOLON)：下一个token不是分号（说明表达式还没结束）；
+		// 2. precedence < p.peekPrecedence()：当前表达式的优先级 < 下一个token的优先级（保证先解析高优先级的）；
+
+		//下一个token为+，进入循环
+
+		// 找到下一个token对应的中缀解析函数
+		infix := p.infixParseFns[p.peekToken.Type]
+		// p.peekToken.Type = PLUS(+) → 拿到 parseInfixExpression 函数
+		// infix = parseInfixExpression
+
+		// 如果没有中缀解析函数，说明表达式结束，返回当前的左部分
+		if infix == nil {
+			return leftExp
+		}
+		// infix不为空跳过
+
+		// 移动token
+		p.nextToken()
+		// 执行后 token 状态：curToken=PLUS(+)，peekToken=INT(2)
+
+		// 执行中缀解析函数（核心递归），更新左部分为「完整的中缀表达式」
+		leftExp = infix(leftExp)
+		// 传入 leftExp=1，执行 parseInfixExpression(1)
+	}
+
+	// 第五步：返回最终解析好的表达式
+	return leftExp //调用该解析函数
+}
+```
+
