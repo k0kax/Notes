@@ -41,14 +41,14 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 ```go
 //parser.go
 const (
-_ int = iota
-LOWEST
-EQUALS // ==相等
-LESSGREATER // > or <大于或小于
-SUM // + 加减
-PRODUCT // *乘除
-PREFIX // -X or !X负数或非x
-CALL // myFunction(X)函数
+	_ int = iota
+	LOWEST
+	EQUALS // ==相等
+	LESSGREATER // > or <大于或小于
+	SUM // + 加减
+	PRODUCT // *乘除
+	PREFIX // -X or !X负数或非x
+	CALL // myFunction(X)函数
 )
 ```
 具体的解析语句，此处并没有完全实现

@@ -62,3 +62,8 @@ func (p *Parser) curPrecedence() int {
 	return LOWEST
 }
 ```
+
+设置中缀解析函数
+```go
+
+```
