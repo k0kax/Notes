@@ -115,11 +115,9 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)   //注册!=的解析函数
 	p.registerInfix(token.LT, p.parseInfixExpression)       //注册<的解析函数
 	p.registerInfix(token.GT, p.parseInfixExpression)       //注册>的解析函数
-
-	//布尔型字面量
-	p.registerPrefix(token.TRUE, p.parseBoolean)
-	p.registerPrefix(token.FALSE, p.parseBoolean)
-
+	
 	return p
 }
 ```
+
+设置parseExpression方法
