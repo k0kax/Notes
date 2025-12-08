@@ -82,3 +82,44 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	return expression
 }
 ```
+后面会举例介绍具体工作流程
+
+注册解析函数
+```go
+//parser.go
+// 实例化语法分析器
+func New(l *lexer.Lexer) *Parser {
+	p := &Parser{l: l,
+		errors: []string{},
+	} //语法分析器实例
+
+	//读取两个词法单元，以设置curToken和peekToken
+	p.nextToken()
+	p.nextToken()
+
+	//关联解析函数
+	//前缀解析函数
+	p.prefixParseFns = make(map[token.TokenType]prefixParseFn) //初始化映射
+	p.registerPrefix(token.IDENT, p.parseIdentifier)           //注册ident标识符相关的解析函数（parseIdentifier）
+	p.registerPrefix(token.INT, p.parseIntegerLiteral)         //注册integer整形相关的解析函数（parseIntegerLiteral）
+	p.registerPrefix(token.BANG, p.parsePrefixExpression)      //注册！非的解析函数
+	p.registerPrefix(token.MINUS, p.parsePrefixExpression)     //注册-负号的解析函数
+
+	//中缀解析函数
+	p.infixParseFns = make(map[token.TokenType]infixParseFn)
+	p.registerInfix(token.PLUS, p.parseInfixExpression)     //注册加号+的解析函数
+	p.registerInfix(token.MINUS, p.parseInfixExpression)    //注册-的解析函数
+	p.registerInfix(token.SLASH, p.parseInfixExpression)    //注册/的解析函数
+	p.registerInfix(token.ASTERISK, p.parseInfixExpression) //注册*的解析函数
+	p.registerInfix(token.EQ, p.parseInfixExpression)       //注册==的解析函数
+	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)   //注册!=的解析函数
+	p.registerInfix(token.LT, p.parseInfixExpression)       //注册<的解析函数
+	p.registerInfix(token.GT, p.parseInfixExpression)       //注册>的解析函数
+
+	//布尔型字面量
+	p.registerPrefix(token.TRUE, p.parseBoolean)
+	p.registerPrefix(token.FALSE, p.parseBoolean)
+
+	return p
+}
+```
