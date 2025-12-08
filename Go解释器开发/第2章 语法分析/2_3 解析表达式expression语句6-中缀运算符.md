@@ -173,6 +173,7 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 这个方法非常精妙，涉及到左对齐，递归调用，以及为啥用for循环而不用if，将在下篇中举例介绍
 
 测试函数
+分别测试中缀运算符和
 ```go
 //parser_test.go
 // 测试中缀运算符
@@ -224,10 +225,6 @@ func TestParsingInfixExpressions(t *testing.T) {
 		 if !testIntergerLiteral(t, exp.Right, tt.rightValue) {
 		 	return
 		 }
-
-		if !testInfixExpression(t, stmt.Expression, tt.leftValue, tt.operator, tt.rightValue) {
-			return
-		}
 	}
 }
 ```
