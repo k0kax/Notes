@@ -65,5 +65,20 @@ func (p *Parser) curPrecedence() int {
 
 设置中缀解析函数
 ```go
+//parser.go
+// 中缀解析函数
+func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
+	// 1. 初始化中缀表达式节点（+）
+	expression := &ast.InfixExpression{
+		Token:    p.curToken,         //+
+		Operator: p.curToken.Literal, //“+”
+		Left:     left,               //1
+	}
 
+	precedence := p.curPrecedence()                  //记录当前词法单元+的优先级 SUM
+	p.nextToken()                                    //curToken=INT(2)，peekToken=ASTERISK(*)
+	expression.Right = p.parseExpression(precedence) //递归调用 parseExpression(SUM) 解析右边的 2*3（重点！）
+
+	return expression
+}
 ```
