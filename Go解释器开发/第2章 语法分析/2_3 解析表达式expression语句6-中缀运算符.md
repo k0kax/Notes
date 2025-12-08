@@ -179,9 +179,9 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
 		input      string
-		leftValue  interface{} //原为int64
+		leftValue  int64
 		operator   string
-		rightValue interface{} //原为int64
+		rightValue int64
 	}{
 		{"5 + 5;", 5, "+", 5},
 		{"5 - 5;", 5, "-", 5},
@@ -191,9 +191,6 @@ func TestParsingInfixExpressions(t *testing.T) {
 		{"5 < 5;", 5, "<", 5},
 		{"5 == 5;", 5, "==", 5},
 		{"5 != 5;", 5, "!=", 5},
-		{"true == true", true, "==", true}, //测试中缀布尔型
-		{"true != false", true, "!=", false},
-		{"false == false", false, "==", false},
 	}
 
 	for _, tt := range infixTests {
@@ -211,22 +208,22 @@ func TestParsingInfixExpressions(t *testing.T) {
 			t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
 		}
 
-		// exp, ok := stmt.Expression.(*ast.InfixExpression)
-		// if !ok {
-		// 	t.Fatalf("exp is not ast.InfixExpression. got=%T", stmt.Expression)
-		// }
+		exp, ok := stmt.Expression.(*ast.InfixExpression)
+		if !ok {
+		 	t.Fatalf("exp is not ast.InfixExpression. got=%T", stmt.Expression)
+		 }
 
-		// if !testIntergerLiteral(t, exp.Left, tt.leftValue) {
-		// 	return
-		// }
+		 if !testIntergerLiteral(t, exp.Left, tt.leftValue) {
+		 	return
+		 }
 
-		// if exp.Operator != tt.operator {
-		// 	t.Fatalf("exp.Operator is not '%s'. got=%s", tt.operator, exp.Operator)
-		// }
+		 if exp.Operator != tt.operator {
+		 	t.Fatalf("exp.Operator is not '%s'. got=%s", tt.operator, exp.Operator)
+		 }
 
-		// if !testIntergerLiteral(t, exp.Right, tt.rightValue) {
-		// 	return
-		// }
+		 if !testIntergerLiteral(t, exp.Right, tt.rightValue) {
+		 	return
+		 }
 
 		if !testInfixExpression(t, stmt.Expression, tt.leftValue, tt.operator, tt.rightValue) {
 			return
