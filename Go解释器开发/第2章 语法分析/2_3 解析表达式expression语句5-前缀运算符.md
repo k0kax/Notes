@@ -73,7 +73,7 @@ func New(l *lexer.Lexer) *Parser {
     return p
 }
 
-// 解析前缀表达式 先解析左，接着解析右
+// 解析前缀表达式 先解析左（操作符），接着解析右
 func (p *Parser) parsePrefixExpression() ast.Expression {
     expression := &ast.PrefixExpression{
         Token:    p.curToken,
