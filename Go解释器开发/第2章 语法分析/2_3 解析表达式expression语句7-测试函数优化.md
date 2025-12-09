@@ -21,8 +21,10 @@ func testIdentifier(t *testing.T, exp ast.Expression, value string) bool {
 
 	return true
 }
-
-// 简化不同字面量测试流程
+```
+据此还可构造：
+```go
+// 简化不同字面量测试流程 不同类型的字面量
 func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{}) bool {
 	switch v := expected.(type) {
 	case int:
@@ -31,8 +33,6 @@ func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{
 		return testIntergerLiteral(t, exp, v)
 	case string:
 		return testIdentifier(t, exp, v)
-	case bool:
-		return testBooleanLiteral(t, exp, v)
 	}
 	t.Errorf("type of exp not handled. got=%T", exp)
 	return false
