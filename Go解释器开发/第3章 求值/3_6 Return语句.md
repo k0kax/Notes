@@ -1,6 +1,6 @@
 好的，我们先回顾一下return语句：`return <表达式>`，我们要的是return返回的值
 
-构造return的对象
+构造return的对象，将返回值封装在里面
 ```go
 //object.go
 const (
