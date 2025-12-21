@@ -50,14 +50,13 @@ vscode的调试分为两个模式---启动模式laungh与attach附加模式。�
 - **program**（程序路径）—— 启动调试器时要运行的可执行文件或目标文件。
 	- 假设文件在目录的xx文件夹下的yy文件，则为`${workspaceFolder}/xx/yy`
 
-- **args**（参数）—— 传递给待调试程序的参数。仅在laungh模式下有效：
-	先看一个核心逻辑：**终端里怎么传参，args 就怎么拆分成数组**。
+- **args**（参数）—— 传递给待调试程序的参数，仅在laungh模式下有效。核心逻辑：**终端里怎么传参，args 就怎么拆分成数组**。
 
 | 终端运行命令（示例）                                                   | 对应的 args 配置                                                                                        | 说明                       |
 | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | ------------------------ |
 | `node app.js --port 3000 --env dev`                          | `"args": ["--port", "3000", "--env", "dev"]`                                                       | 空格分隔的参数，每个拆成数组元素         |
 | `go run main.go -name "张三" -age 20`                          | `"args": ["-name", "张三", "-age", "20"]`                                                            | 带中文 / 空格的参数，直接写（无需额外加引号） |
-| `python script.py --input ./data.txt --output ./result.json` | `"args": ["--input", "${workspaceFolder}/data.txt", "--output", "${workspaceFolder}/result.json"]` |                          |
+| `python script.py --input ./data.txt --output ./result.json` | `"args": ["--input", "${workspaceFolder}/data.txt", "--output", "${workspaceFolder}/result.json"]` | 结合 VS Code 内置变量（避免硬编码路径） |
 	
 - **env**（环境变量）—— 需设置的环境变量（值设为 `null` 可 “取消定义” 某个变量）。
 - **envFile**（环境变量文件路径）—— 包含环境变量的 dotenv 文件路径。
