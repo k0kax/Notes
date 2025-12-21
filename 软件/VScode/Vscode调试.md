@@ -63,9 +63,8 @@ vscode的调试分为两个模式---启动模式laungh与attach附加模式。�
 - **cwd**（当前工作目录）—— 用于查找依赖项和其他文件的当前工作目录。
 - **port**（端口）—— 附加到正在运行的进程时使用的端口。
 - **stopOnEntry**（入口处中断）—— 程序启动后立即中断执行。
-- **console**（控制台类型）—— 要使用的控制台类型，例如 `internalConsole`（内置控制台）、`integratedTerminal`（集成终端）或 `externalTerminal`（外部终端）。
-- **mode**属性字段
-该字段并非通用，不同的语言不一样。
+- **console**（控制台类型）—— 要使用的控制台类型，例如 `internalConsole`（内置控制台）、`integratedTerminal`（集成终端，一般涉及循环输入用）或 `externalTerminal`（外部终端）。
+- **mode**属性字段，该字段并非通用，不同的语言不一样。
 	- **本质**：补充 `request`（launch/attach）的细节，定义 “调试器以何种方式介入程序执行”；
 	- **适用范围**：不是所有调试器都支持（比如 PHP、Chrome 调试器无此属性），主要集中在**编译型 / 解释型后端语言**（Node.js、Go、Python 等）；
 	- **核心作用**：决定调试器是 “逐文件执行”“自动附加子进程” 还是 “仅调试主进程”。
@@ -93,3 +92,29 @@ Go 调试器的 `mode` 属性是**必填项**（区别于 Node.js 的可选）
 | `${fileExtname}`             | 当前打开文件的「后缀名」（含.）        | 区分文件类型（比如判断是 .go 还是 .test.go） | （较少直接用，可结合任务判断）                                              |
 | `${lineNumber}`              | 当前光标所在的行号               | 调试时定位到指定行（极少用）                | -                                                            |
 | `${env:XXX}`                 | 引用系统 / 自定义环境变量          | 引用环境变量中的路径 / 配置               | `"env": {"GOPATH": "${env:GOPATH}"}`（引用系统 GOPATH）            |
+
+## 五、案例
+
+对main.go进行调试，调试会涉及到repl.go的循环输入，需要使用集成终端进行输入。此处对应[[../../Go解释器开发/第3章 求值/3_8 绑定与环境|3_8 绑定与环境]]
+```json
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            //"program": "${workspaceFolder}/evaluator/evaluator_test.go",
+            "program":"${workspaceFolder}/main.go",
+            "env": {},
+           // "args": ["-test.run", "TestLetStatements"],
+            "stopOnEntry": false, // 不需要启动就暂停，手动触发断点
+            "console": "integratedTerminal" // 新增：启用集成终端支持交互输入
+        }
+    ]
+}
+```
