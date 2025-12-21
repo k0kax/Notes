@@ -41,7 +41,7 @@ vscode的调试分为两个模式---启动模式laungh与attach附加模式。�
 - **preLaunchTask**（启动前任务）—— 若要在调试会话开始前执行某个任务，可将此属性设为 `tasks.json`（工作区的 `.vscode` 文件夹中）中指定的任务标签。也可将其设为 `${defaultBuildTask}`，以调用默认的构建任务。必须有该文件。
 - **postDebugTask**（调试后任务）—— 若要在调试会话结束时执行某个任务，可将此属性设为 `tasks.json`（工作区的 `.vscode` 文件夹中）中指定的任务名称。
 - **internalConsoleOptions**（内置控制台选项）—— 此属性控制调试会话期间 “调试控制台” 面板的可见性。
-	-  `openOnStart`（默认）：调试启动时自动打开控制`neverOpen`：永远不自动打开
+	- `openOnStart`（默认）：调试启动时自动打开控制`neverOpen`：永远不自动打开
 	- `openOnFirstSessionStart`：仅第一次调试时打开
 - **debugServer**（调试服务器）—— 仅适用于调试扩展开发者：此属性允许你连接到指定端口，而非启动调试适配器。
 - **serverReadyAction**（服务器就绪操作）—— 若希望被调试程序向调试控制台或集成终端输出特定消息时，自动在浏览器中打开某个 URL，可配置此属性。
