@@ -108,13 +108,12 @@ Go 调试器的 `mode` 属性是**必填项**（区别于 Node.js 的可选）
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            //"program": "${workspaceFolder}/evaluator/evaluator_test.go",
             "program":"${workspaceFolder}/main.go",
             "env": {},
-           // "args": ["-test.run", "TestLetStatements"],
             "stopOnEntry": false, // 不需要启动就暂停，手动触发断点
             "console": "integratedTerminal" // 新增：启用集成终端支持交互输入
         }
     ]
 }
 ```
+其他章节也类似
