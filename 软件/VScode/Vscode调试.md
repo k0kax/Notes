@@ -83,3 +83,14 @@ Go 调试器的 `mode` 属性是**必填项**（区别于 Node.js 的可选）
 |`remote`|远程调试（附加到远程 Go 进程）|调试服务器上运行的 Go 程序|
 
 一些路径相关的参数
+|变量名|核心含义|适用场景|Go 配置示例|
+|---|---|---|---|
+|`${workspaceFolder}`|工作区根目录绝对路径|引用项目内文件 / 目录（最常用）|`"program": "${workspaceFolder}/main.go"`|
+|`${workspaceFolderBasename}`|工作区根目录的「文件夹名」（不含路径）|生成日志文件名、输出目录名|`"args": ["--log", "${workspaceFolderBasename}.log"]`|
+|`${file}`|当前打开的文件的完整绝对路径|调试「当前打开的文件」（比如临时调试某个 test 文件）|`"program": "${file}"`（调试当前打开的 go 文件）|
+|`${fileBasename}`|当前打开文件的「文件名 + 后缀」（不含路径）|引用文件名（比如输出和当前文件同名的日志）|`"args": ["--output", "${fileBasename}.out"]`|
+|`${fileBasenameNoExtension}`|当前打开文件的「文件名（无后缀）」|生成无后缀的输出文件|`"args": ["--bin", "${fileBasenameNoExtension}"]`（编译后二进制文件名）|
+|`${fileDirname}`|当前打开文件的「所在目录绝对路径」|引用当前文件的同级文件|`"program": "${fileDirname}/utils.go"`|
+|`${fileExtname}`|当前打开文件的「后缀名」（含.）|区分文件类型（比如判断是 .go 还是 .test.go）|（较少直接用，可结合任务判断）|
+|`${lineNumber}`|当前光标所在的行号|调试时定位到指定行（极少用）|-|
+|`${env:XXX}`|引用系统 / 自定义环境变量|引用环境变量中的路径 / 配置|`"env": {"GOPATH": "${env:GOPATH}"}`（引用系统 GOPATH）|
