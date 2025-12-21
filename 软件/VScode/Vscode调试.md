@@ -23,3 +23,5 @@
 }
 ```
 主要的配置信息在configurations里面
+
+vscode的调试分为两个模式---启动模式laungh与附加模式。
