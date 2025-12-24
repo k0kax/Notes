@@ -412,4 +412,52 @@ func TestIfExpression(t *testing.T) {
 }
 ```
 ## 求值
-求值器修改与前面类似，也是嵌套，新建一个专门处理elif的函数，z
+求值器修改与前面类似，也是嵌套，新建一个专门处理elif的函数，处理if的函数再调用它即可。
+```go
+// evaluator.go
+// if选择语句的求值
+func evalIfExpression(ie *ast.IfExpression, env *object.Environment) object.Object {
+	condition := Eval(ie.Condition, env) //处理条件
+	if isError(condition) {
+		return condition
+	}
+
+	if isTruthy(condition) { //条件对 首选项
+		return Eval(ie.Consequence, env) //执行结果
+	} //首选项条件不对，且备选结果不为空
+
+	//执行中间选项
+	for _, al := range ie.Alternatives {
+		alter_obj := evalElifExpression(al, env)
+		if alter_obj != NULL { //任何中间选项，最先正确执行的，返回它的执行结果
+			return alter_obj
+		}
+	}
+
+	//执行最后选项
+	if ie.LastAlternative != nil {
+		return Eval(ie.LastAlternative, env)
+	}
+
+	//首选项错误，有或没有中间选项，没有else的最后结果
+	return NULL
+}
+
+// elif的处理 和前面差不多
+func evalElifExpression(ef *ast.ElIfExpression, env *object.Environment) object.Object {
+	alternnative_condition := Eval(ef.Condition, env)
+	if isError(alternnative_condition) {
+		return alternnative_condition
+	}
+
+	if isTruthy(alternnative_condition) {
+		return Eval(ef.Consequence, env)
+	} else {
+		return NULL
+	}
+}
+```
+测试代码如下：
+```go
+
+```
