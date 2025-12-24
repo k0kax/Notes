@@ -1,4 +1,16 @@
-实际上，使用elif关键词，不用else if 作为if语句的中间选项，是为了偷懒，不想重写部分词法单元。但问题不大后期会改掉。好，让我们开始吧。
+实际上，使用elif关键词，不用else if 作为if语句的中间选项，是为了偷懒，不想重写部分词法单元。但问题不大后期会改掉。新的语法结构如下：
+```go
+if(<条件1>)
+<结果1>
+elif(<条件2>)
+<结果2>
+elif(<条件3>)
+<结果3>
+...
+else
+<可替代的结果>
+```
+当然可以仅仅只有if。好，让我们开始吧。
 ## 词法解析
 要实现elif多分支的条件，无非是多加个关键词，改改token即可
 ```go
@@ -215,10 +227,140 @@ if (5 < 10) {
 
 ```
 ## 语法解析
-现在到语法解析了，新加个elif关键词，就需要为它新建ast，同时需要求该If的ast
+现在到语法解析了，新加个elif关键词，就需要为它新建ast，如下所示：
 ```go
 //ast.go
+// 中间选项elif
+type ElIfExpression struct {
+	Token       token.Token
+	Condition   Expression//条件
+	Consequence *BlockStatement//结果
+}
 
+func (ef *ElIfExpression) expressionNode()      {}
+func (ef *ElIfExpression) TokenLiteral() string { return ef.Token.Literal }
+func (ef *ElIfExpression) String() string {
+	var out bytes.Buffer
+
+	//写入首选项的条件和结果
+	out.WriteString("elif")
+	out.WriteString(" ")
+	out.WriteString(ef.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(ef.Consequence.String())
+
+	return out.String()
+}
 ```
+同时，if的AST就需要改动，加入elif了
+```go
+//ast.go
+// ---------------------------------------------------if-else--------------------------------------------
+type IfExpression struct {
+	Token           token.Token
+	Condition       Expression //首选项
+	Consequence     *BlockStatement
+	Alternatives    []*ElIfExpression //中间选项
+	LastAlternative *BlockStatement   //最后选项
+}
 
+func (ie *IfExpression) expressionNode()      {}
+func (ie *IfExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *IfExpression) String() string {
+	var out bytes.Buffer
+
+	//写入首选项的条件和结果
+	out.WriteString("if")
+	out.WriteString(" ")
+	out.WriteString(ie.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(ie.Consequence.String())
+
+	//写入中间选项的条件和结果
+	for _, alternative := range ie.Alternatives {
+		alternative.String()
+	}
+
+	//最后选项
+	if ie.LastAlternative != nil {
+		out.WriteString(" else ")
+		out.WriteString(ie.LastAlternative.String())
+	}
+
+	return out.String()
+}
+```
+接下里需要修改if的语法解析函数，此处采用嵌套的方法，单独处理elif语句，再用if调用它
+```go
+// 解析if语句
+func (p *Parser) parseIfExpression() ast.Expression {
+	expression := &ast.IfExpression{Token: p.curToken}
+
+	//if部分 首选
+	//识别条件
+	if !p.expectPeek(token.LPAREN) { //下一个token是左括号(，移动token，继续，进入条件识别；不是则直接退出
+		return nil
+	}
+
+	p.nextToken()                                    //token移动开始识别条件
+	expression.Condition = p.parseExpression(LOWEST) //低权限识别条件，并写入条件中
+
+	if !p.expectPeek(token.RPAREN) { //下一个token是右括号)，移动token，继续，表明条件结束
+		return nil
+	}
+
+	//识别结果
+	if !p.expectPeek(token.LBRACE) { //下一个token是左大括号{，移动token，继续，开始进行结果识别；不是则直接退出
+		return nil
+	}
+
+	//写入首选结果
+	expression.Consequence = p.parseBlockStatement()
+
+	//中间选项
+	for p.peekTokenIs(token.ELIF) {
+		p.nextToken()
+		elif := p.parseElIfExpression()
+		expression.Alternatives = append(expression.Alternatives, elif)
+	}
+
+	//else部分 最后选项
+	if p.peekTokenIs(token.ELSE) { //识别下一个token是else,进入else的判断；不是则直接退出
+		p.nextToken() //后移token 匹配到真正的
+
+		if !p.expectPeek(token.LBRACE) { //识别下一个token是左大括号{
+			return nil
+		}
+
+		expression.LastAlternative = p.parseBlockStatement() //写入可替换结果
+	}
+
+	return expression
+}
+
+// 解析ELIF 和解析IF差不多
+func (p *Parser) parseElIfExpression() *ast.ElIfExpression {
+	expression := &ast.ElIfExpression{Token: p.curToken}
+	if !p.expectPeek(token.LPAREN) { //下一个token是左括号(，移动token，继续，进入条件识别；不是则直接退出
+		return nil
+	}
+
+	p.nextToken()                                    //token移动开始识别条件
+	expression.Condition = p.parseExpression(LOWEST) //低权限识别条件，并写入条件中
+
+	if !p.expectPeek(token.RPAREN) { //下一个token是右括号)，移动token，继续，表明条件结束
+		return nil
+	}
+
+	//识别结果
+	if !p.expectPeek(token.LBRACE) { //下一个token是左大括号{，移动token，继续，开始进行结果识别；不是则直接退出
+		return nil
+	}
+
+	//写入首选结果
+	expression.Consequence = p.parseBlockStatement()
+
+	return expression
+}
+```
 ## 求值
