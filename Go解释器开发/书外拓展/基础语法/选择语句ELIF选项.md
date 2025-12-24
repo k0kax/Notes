@@ -488,4 +488,13 @@ func TestIfElseExpression(t *testing.T) {
 }
 ```
 
-运行repl
+运行repl测试：
+```go
+>>if (1 > 2) { 10 } elif(1==2) { 20 }elif(2==3){7}else { 11 }
+11
+>>if (1 > 2) { 10 } elif(1==2) { 20 }elif(2<3){7}else { 11 }
+7
+>>if (1 > 2) { 10 } elif(1<2) { 20 }elif(2<3){7}else { 11 }
+20
+>>
+```
