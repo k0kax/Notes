@@ -439,7 +439,7 @@ func evalIfExpression(ie *ast.IfExpression, env *object.Environment) object.Obje
 		return Eval(ie.LastAlternative, env)
 	}
 
-	//首选项错误，有或没有中间选项，没有else的最后结果
+	//首选项错误+有或没有中间选项+没有else的最后结果
 	return NULL
 }
 
